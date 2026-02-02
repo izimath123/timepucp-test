@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>⏰ TIMEPUCP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⏰ TIMEPUCP - Temporizador de Exámenes</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,38 +14,36 @@
 <body>
 
     <header>
-
         <div class="config">
             <div class="hora-input">
-                 <label>Hora Inicio</label>
-                 <div class="time-wrapper">
-                    <input type="time" id="horaInicio">
-                 </div>
-                 <small>Haz clic en el reloj</small>
+                <label for="horaInicio">Hora Inicio</label>
+                <div class="time-wrapper">
+                    <input type="time" id="horaInicio" aria-label="Hora de inicio del examen">
+                </div>
+                <small>Haz clic en el reloj</small>
             </div>
 
-        <div class="hora-input">
-            <label>Hora Fin</label>
-            <div class="time-wrapper">
-                <input type="time" id="horaFin">
+            <div class="hora-input">
+                <label for="horaFin">Hora Fin</label>
+                <div class="time-wrapper">
+                    <input type="time" id="horaFin" aria-label="Hora de fin del examen">
+                </div>
+                <small>Haz clic en el reloj</small>
             </div>
-            <small>Haz clic en el reloj</small>
-        </div>
 
             <div class="tiempo-restante">
-                Tiempo Restante:
-                <span id="contador">00:00:00</span>
+                <span class="label-restante">Tiempo Restante:</span>
+                <span id="contador" role="timer" aria-live="polite">00:00:00</span>
             </div>
         </div>
-
     </header>
 
     <main>
         <div class="hora-actual">
-            <span id="horaActual">12:34:35 PM</span>
+            <span id="horaActual" role="timer" aria-live="off">12:34:35 PM</span>
         </div>
 
-        <div class="barra-container">
+        <div class="barra-container" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
             <div class="barra-progreso" id="barraProgreso"></div>
         </div>
 
@@ -52,54 +51,63 @@
             <!-- Fila 1 -->
             <div class="fila fila-1">
                 <div class="campo">
-                    <label>Curso:</label>
-                    <input type="text" placeholder="Curso" id="curso">
+                    <label for="curso">Curso:</label>
+                    <input type="text" placeholder="Nombre del curso" id="curso">
                 </div>
 
                 <div class="campo">
-                    <label>Evaluación:</label>
-                    <input type="text" placeholder="Evaluación" id="evaluacion">
+                    <label for="evaluacion">Evaluación:</label>
+                    <input type="text" placeholder="Tipo de evaluación" id="evaluacion">
                 </div>
             </div>
 
             <!-- Fila 2 -->
             <div class="fila fila-2">
                 <div class="campo">
-                    <label>Profesor:</label>
-                    <input type="text" placeholder="Profesor" id="profesor">
+                    <label for="profesor">Profesor:</label>
+                    <input type="text" placeholder="Nombre del profesor" id="profesor">
                 </div>
 
                 <div class="campo">
-                    <label>Horario:</label>
-                    <input type="text" placeholder="Horario / Clave" id="aula">
+                    <label for="aula">Horario de práctica:</label>
+                    <input type="text" placeholder="123" id="aula">
                 </div>
+            </div>
 
-                <div class="campo">
-                    <label>Fecha:</label>
-
-                    <!-- Input visible -->
+            <!-- Fila 3: Fecha -->
+            <div class="fila fila-3">
+                <div class="campo campo-fecha">
+                    <label for="fechaTexto">Fecha:</label>
                     <input type="text"
                         id="fechaTexto"
                         placeholder="dd/mm/yyyy"
-                        readonly>
-
-                    <!-- Input real con calendario -->
+                        readonly
+                        aria-label="Fecha del examen">
                     <input type="date"
                         id="fecha"
-                        style="position:absolute; opacity:0; pointer-events:none;">
+                        style="position:absolute; opacity:0; pointer-events:none;"
+                        aria-hidden="true">
                 </div>
+            </div>
 
+            <!-- Fila 4: Botones -->
+            <div class="fila fila-acciones">
                 <div class="acciones">
-                    <button id="btnFullscreen">⛶ Pantalla completa</button>
-                    <button id="btnDarkMode">🌙 Modo oscuro</button>
+                    <button id="btnFullscreen" class="btn-action" aria-label="Activar pantalla completa">
+                        <span class="icon">⛶</span>
+                        <span class="text">Pantalla completa</span>
+                    </button>
+                    <button id="btnDarkMode" class="btn-action" aria-label="Cambiar a modo oscuro">
+                        <span class="icon">🌙</span>
+                        <span class="text">Modo oscuro</span>
+                    </button>
+                    <button id="btnReset" class="btn-action btn-secondary" aria-label="Reiniciar temporizador">
+                        <span class="icon">↻</span>
+                        <span class="text">Reiniciar</span>
+                    </button>
                 </div>
-
-
-
             </div>
         </div>
-
-
     </main>
 
     <script src="js/timer.js"></script>
