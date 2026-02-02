@@ -63,6 +63,7 @@ header {
     gap: 60px;
     max-width: 1920px;
     margin: 0 auto;
+    width: 100%;
 }
 
 /* =========================
@@ -91,7 +92,7 @@ header {
     font-size: 26px;
     font-weight: 600;
     padding: 12px 18px;
-    width: 200px;
+    width: 220px;  /* Aumentado de 200px a 220px para AM/PM */
     border: 2px solid var(--color-border-light);
     border-radius: var(--border-radius);
     background: var(--color-surface-light);
@@ -176,6 +177,7 @@ main {
     width: 100%;
     margin: 0 auto;
     padding: 0 20px;
+    box-sizing: border-box;
 }
 
 /* =========================
@@ -209,7 +211,8 @@ main {
 ========================= */
 
 .barra-container {
-    width: calc(100% - 40px);
+    width: calc(100% - 80px);
+    max-width: 1800px;  /* Límite máximo para pantallas muy grandes */
     height: 32px;
     margin: 0 auto 40px auto;
     border: 2px solid var(--color-border-light);
@@ -255,16 +258,21 @@ main {
 ========================= */
 
 .info {
-    padding: 0 20px 30px 20px;
+    padding: 0 40px 30px 40px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 28px;
     margin-bottom: 20px;
+    max-width: 1920px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .fila {
     display: grid;
-    gap: 30px;
+    gap: 40px;  /* Aumentado de 30px a 40px para mejor espaciado horizontal */
 }
 
 /* ----- FILA 1: CURSO + EVALUACIÓN ----- */
@@ -280,7 +288,11 @@ main {
 /* ----- FILA 3: FECHA ----- */
 .fila-3 {
     grid-template-columns: 1fr;
-    max-width: 600px;
+    max-width: 700px;  /* Aumentado de 600px a 700px */
+}
+
+.fila-3 .campo input {
+    max-width: 450px;  /* Limitar ancho del input de fecha */
 }
 
 /* ----- FILA 4: BOTONES ----- */
@@ -304,10 +316,12 @@ main {
     font-weight: 900;
     white-space: nowrap;
     flex-shrink: 0;
+    min-width: fit-content;
 }
 
 .campo input {
     flex: 1;
+    min-width: 0; /* Permite que el input se reduzca si es necesario */
     height: clamp(58px, 6vh, 70px);
     font-size: clamp(28px, 3vw, 34px);
     font-weight: 800;
@@ -340,6 +354,25 @@ main {
 
 .campo-fecha input[type="text"] {
     cursor: pointer;
+}
+
+/* =========================
+   AJUSTES ESPECÍFICOS DE CAMPOS
+========================= */
+
+/* Reducir tamaño de labels largos para mantener balance */
+.campo-horario label {
+    font-size: 32px;  /* Ligeramente más pequeño que el estándar 36px */
+}
+
+/* Input del horario más pequeño ya que necesita poco espacio */
+.campo-horario input {
+    max-width: 250px;  /* Limitar el ancho del input */
+}
+
+/* Ajustar Evaluación para que tenga ancho similar */
+.campo-evaluacion label {
+    font-size: 34px;  /* Tamaño intermedio */
 }
 
 /* =========================
@@ -441,7 +474,7 @@ body.dark .hora-input small {
 /* Para pantallas grandes (proyectores, TVs) */
 @media (min-width: 1600px) {
     .config {
-        gap: 80px;
+        gap: 50px;  /* Reducido de 80px a 50px para evitar desbordamiento */
     }
     
     .hora-input label,
@@ -452,7 +485,7 @@ body.dark .hora-input small {
     .hora-input input[type="time"] {
         font-size: 30px;
         padding: 14px 22px;
-        width: 220px;
+        width: 240px;  /* Aumentado de 220px */
     }
     
     #contador {
@@ -468,16 +501,33 @@ body.dark .hora-input small {
     .barra-container {
         height: 40px;
         margin-bottom: 50px;
+        width: calc(100% - 100px);
     }
     
     .campo label {
         font-size: 42px;
     }
     
+    .campo-horario label {
+        font-size: 36px;  /* Proporcionalmente más pequeño */
+    }
+    
+    .campo-horario input {
+        max-width: 280px;  /* Limitar ancho en pantallas grandes */
+    }
+    
+    .campo-evaluacion label {
+        font-size: 38px;
+    }
+    
     .campo input {
         height: 80px;
         font-size: 38px;
         padding: 14px 22px;
+    }
+    
+    .info {
+        padding: 0 50px 30px 50px;  /* Reducido de 60px a 50px */
     }
     
     .btn-action {
@@ -493,7 +543,7 @@ body.dark .hora-input small {
     }
     
     .config {
-        gap: 100px;
+        gap: 80px;  /* Reducido de 100px a 80px */
     }
     
     .hora-input label,
@@ -504,7 +554,7 @@ body.dark .hora-input small {
     .hora-input input[type="time"] {
         font-size: 36px;
         padding: 18px 26px;
-        width: 260px;
+        width: 280px;  /* Aumentado de 260px */
     }
     
     #contador {
@@ -519,15 +569,38 @@ body.dark .hora-input small {
     
     .barra-container {
         height: 50px;
+        width: calc(100% - 120px);
+        max-width: 1700px;
     }
     
     .campo label {
         font-size: 50px;
     }
     
+    .campo-horario label {
+        font-size: 42px;  /* Proporcionalmente más pequeño */
+    }
+    
+    .campo-horario input {
+        max-width: 320px;  /* Limitar ancho en 4K */
+    }
+    
+    .campo-evaluacion label {
+        font-size: 45px;
+    }
+    
     .campo input {
         height: 90px;
         font-size: 44px;
+    }
+    
+    .info {
+        padding: 0 60px 40px 60px;  /* Reducido de 80px a 60px */
+        gap: 32px;
+    }
+    
+    .fila-3 {
+        max-width: 900px;  /* Ancho mayor en pantallas 4K */
     }
     
     .btn-action {
@@ -557,6 +630,10 @@ body.dark .hora-input small {
     
     .fila-3 {
         max-width: 100%;
+    }
+    
+    .info {
+        padding: 0 30px 30px 30px;
     }
     
     .campo {
@@ -631,6 +708,32 @@ body.dark .hora-input small {
 /* =========================
    ANIMACIONES Y ESTADOS
 ========================= */
+
+/* Ajustes para pantalla completa */
+:fullscreen body,
+:-webkit-full-screen body,
+:-moz-full-screen body {
+    overflow-y: auto;
+}
+
+:fullscreen .barra-container,
+:-webkit-full-screen .barra-container,
+:-moz-full-screen .barra-container {
+    width: calc(100% - 100px);
+    max-width: 1700px;
+}
+
+:fullscreen .info,
+:-webkit-full-screen .info,
+:-moz-full-screen .info {
+    padding: 0 50px 30px 50px;
+}
+
+:fullscreen header,
+:-webkit-full-screen header,
+:-moz-full-screen header {
+    padding: 16px 50px;
+}
 
 /* Animación para cuando el tiempo se está acabando */
 @keyframes blink-red {
