@@ -1,0 +1,55 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo circular -->
+  <circle cx="256" cy="256" r="256" fill="#003DA5"/>
+  
+  <!-- Borde exterior del reloj -->
+  <circle cx="256" cy="256" r="180" fill="#FFFFFF" stroke="#003DA5" stroke-width="8"/>
+  
+  <!-- Marca de las 12 -->
+  <rect x="246" y="96" width="20" height="40" rx="4" fill="#003DA5"/>
+  <!-- Marca de las 3 -->
+  <rect x="376" y="246" width="40" height="20" rx="4" fill="#003DA5"/>
+  <!-- Marca de las 6 -->
+  <rect x="246" y="376" width="20" height="40" rx="4" fill="#003DA5"/>
+  <!-- Marca de las 9 -->
+  <rect x="96" y="246" width="40" height="20" rx="4" fill="#003DA5"/>
+  
+  <!-- Puntos para otras horas -->
+  <circle cx="320" cy="146" r="8" fill="#003DA5" opacity="0.6"/>
+  <circle cx="366" cy="192" r="8" fill="#003DA5" opacity="0.6"/>
+  <circle cx="366" cy="320" r="8" fill="#003DA5" opacity="0.6"/>
+  <circle cx="320" cy="366" r="8" fill="#003DA5" opacity="0.6"/>
+  <circle cx="192" cy="366" r="8" fill="#003DA5" opacity="0.6"/>
+  <circle cx="146" cy="320" r="8" fill="#003DA5" opacity="0.6"/>
+  <circle cx="146" cy="192" r="8" fill="#003DA5" opacity="0.6"/>
+  <circle cx="192" cy="146" r="8" fill="#003DA5" opacity="0.6"/>
+  
+  <!-- Manecilla de minutos -->
+  <rect x="250" y="140" width="12" height="120" rx="6" fill="#003DA5">
+    <animateTransform
+      attributeName="transform"
+      attributeType="XML"
+      type="rotate"
+      from="0 256 256"
+      to="360 256 256"
+      dur="60s"
+      repeatCount="indefinite"/>
+  </rect>
+  
+  <!-- Manecilla de horas -->
+  <rect x="248" y="180" width="16" height="80" rx="8" fill="#FF6B00">
+    <animateTransform
+      attributeName="transform"
+      attributeType="XML"
+      type="rotate"
+      from="0 256 256"
+      to="360 256 256"
+      dur="720s"
+      repeatCount="indefinite"/>
+  </rect>
+  
+  <!-- Centro del reloj -->
+  <circle cx="256" cy="256" r="18" fill="#003DA5"/>
+  <circle cx="256" cy="256" r="12" fill="#FF6B00"/>
+  <circle cx="256" cy="256" r="6" fill="#FFFFFF"/>
+</svg>
