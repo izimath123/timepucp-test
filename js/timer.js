@@ -24,6 +24,8 @@ const btnDarkMode = document.getElementById("btnDarkMode");
 const btnReset = document.getElementById("btnReset");
 const btnSoloReloj = document.getElementById("btnSoloReloj");
 const btnSalirSoloReloj = document.getElementById("btnSalirSoloReloj");
+const modalFin = document.getElementById("modalFin");
+const btnCerrarModal = document.getElementById("btnCerrarModal");
 
 // =========================
 // VARIABLES GLOBALES
@@ -106,7 +108,11 @@ function iniciarCuentaRegresiva() {
             barraContainer.setAttribute("aria-valuenow", "100");
             contadorEl.classList.remove("warning");
             contadorEl.classList.add("tiempo-critico");
+            contadorSoloEl.classList.remove("warning");
+            contadorSoloEl.classList.add("tiempo-critico");
             clearInterval(intervaloCuenta);
+            // Mostrar modal de fin
+            modalFin.classList.add("visible");
             return;
         }
 
@@ -241,6 +247,21 @@ btnSoloReloj.addEventListener("click", activarSoloReloj);
 btnSalirSoloReloj.addEventListener("click", salirSoloReloj);
 
 // =========================
+// MODAL FIN DE EVALUACIÓN
+// =========================
+function cerrarModal() {
+    modalFin.classList.remove("visible");
+}
+
+btnCerrarModal.addEventListener("click", cerrarModal);
+
+// Click fuera del modal para cerrar
+modalFin.addEventListener("click", (e) => {
+    if (e.target === modalFin) cerrarModal();
+});
+
+// Escape también cierra el modal
+// =========================
 // BOTÓN RESET
 // =========================
 btnReset.addEventListener("click", () => {
@@ -362,9 +383,10 @@ document.addEventListener("keydown", (e) => {
         btnReset.click();
     }
 
-    // Escape para salir del modo solo reloj
-    if (e.key === "Escape" && document.body.classList.contains("solo-reloj")) {
-        salirSoloReloj();
+    // Escape para salir del modo solo reloj o cerrar modal
+    if (e.key === "Escape") {
+        if (modalFin.classList.contains("visible")) cerrarModal();
+        else if (document.body.classList.contains("solo-reloj")) salirSoloReloj();
     }
 });
 
