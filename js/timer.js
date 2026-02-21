@@ -73,8 +73,8 @@ function iniciarCuentaRegresiva() {
         contadorSoloEl.textContent = "00:00:00";
         barraEl.style.width = "0%";
         barraContainer.setAttribute("aria-valuenow", "0");
-        contadorEl.classList.remove("warning", "tiempo-critico");
-        contadorSoloEl.classList.remove("warning", "tiempo-critico");
+        contadorEl.classList.remove("warning", "tiempo-critico", "en-espera");
+        contadorSoloEl.classList.remove("warning", "tiempo-critico", "en-espera");
         return;
     }
 
@@ -99,7 +99,33 @@ function iniciarCuentaRegresiva() {
 
     intervaloCuenta = setInterval(() => {
         const ahora = new Date();
+        const antesDeInicio = inicio - ahora;
         const restante = fin - ahora;
+
+        // === FASE DE ESPERA: aún no ha llegado la hora de inicio ===
+        if (antesDeInicio > 0) {
+            // Mostrar la duración total de la evaluación (no cuenta regresiva)
+            const durTotal = tiempoTotal;
+            const hD = Math.floor(durTotal / 3600000);
+            const mD = Math.floor((durTotal % 3600000) / 60000);
+            const sD = Math.floor((durTotal % 60000) / 1000);
+            const durStr = `${String(hD).padStart(2,"0")}:${String(mD).padStart(2,"0")}:${String(sD).padStart(2,"0")}`;
+
+            contadorEl.textContent = durStr;
+            contadorSoloEl.textContent = durStr;
+            contadorEl.classList.add("en-espera");
+            contadorSoloEl.classList.add("en-espera");
+            contadorEl.classList.remove("warning", "tiempo-critico");
+            contadorSoloEl.classList.remove("warning", "tiempo-critico");
+            barraEl.style.width = "0%";
+            barraContainer.setAttribute("aria-valuenow", "0");
+            actualizarColorBarra(0);
+            return;
+        }
+
+        // === FASE ACTIVA: ya pasó la hora de inicio ===
+        contadorEl.classList.remove("en-espera");
+        contadorSoloEl.classList.remove("en-espera");
 
         if (restante <= 0) {
             contadorEl.textContent = "00:00:00";
@@ -111,18 +137,16 @@ function iniciarCuentaRegresiva() {
             contadorSoloEl.classList.remove("warning");
             contadorSoloEl.classList.add("tiempo-critico");
             clearInterval(intervaloCuenta);
-            // Mostrar modal de fin con alerta sonora
             modalFin.classList.add("visible");
             reproducirAlerta();
             return;
         }
 
-        // Calcular tiempo
+        // Calcular tiempo restante
         const horas = Math.floor(restante / 3600000);
         const minutos = Math.floor((restante % 3600000) / 60000);
         const segundos = Math.floor((restante % 60000) / 1000);
 
-        // Formatear con ceros a la izquierda
         const horasStr = String(horas).padStart(2, "0");
         const minutosStr = String(minutos).padStart(2, "0");
         const segundosStr = String(segundos).padStart(2, "0");
@@ -152,12 +176,29 @@ function iniciarCuentaRegresiva() {
         const progreso = Math.min(((tiempoTotal - restante) / tiempoTotal) * 100, 100);
         barraEl.style.width = `${progreso.toFixed(2)}%`;
         barraContainer.setAttribute("aria-valuenow", Math.round(progreso));
+        actualizarColorBarra(progreso);
 
         ultimoTiempoRestante = restante;
     }, 1000);
 
     // Guardar configuración
     guardarDatos();
+}
+
+// =========================
+// COLOR DINÁMICO DE BARRA
+// =========================
+function actualizarColorBarra(progreso) {
+    barraEl.classList.remove('fase-verde', 'fase-amarillo', 'fase-naranja', 'fase-rojo');
+    if (progreso < 60) {
+        barraEl.classList.add('fase-verde');
+    } else if (progreso < 80) {
+        barraEl.classList.add('fase-amarillo');
+    } else if (progreso < 93) {
+        barraEl.classList.add('fase-naranja');
+    } else {
+        barraEl.classList.add('fase-rojo');
+    }
 }
 
 // =========================
@@ -258,55 +299,44 @@ function reproducirAlerta() {
     try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
 
-        // Tres beeps descendentes tipo alarma
-        const beeps = [
-            { freq: 880, start: 0.0, dur: 0.18 },
-            { freq: 880, start: 0.25, dur: 0.18 },
-            { freq: 880, start: 0.50, dur: 0.18 },
-            { freq: 660, start: 0.85, dur: 0.35 },
-        ];
-
-        beeps.forEach(({ freq, start, dur }) => {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-
-            osc.type = "sine";
-            osc.frequency.setValueAtTime(freq, ctx.currentTime + start);
-
-            gain.gain.setValueAtTime(0, ctx.currentTime + start);
-            gain.gain.linearRampToValueAtTime(0.6, ctx.currentTime + start + 0.02);
-            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur);
-
-            osc.start(ctx.currentTime + start);
-            osc.stop(ctx.currentTime + start + dur + 0.05);
-        });
-
-        // Repetir 3 veces con pausa entre repeticiones
-        let repeticiones = 0;
-        const intervaloAlerta = setInterval(() => {
-            repeticiones++;
-            if (repeticiones >= 2) {
-                clearInterval(intervaloAlerta);
-                return;
-            }
-            beeps.forEach(({ freq, start, dur }) => {
+        // Piano Fin: tres acordes descendentes con timbre de piano
+        const tocarAcorde = (frecuencias, tiempoInicio) => {
+            frecuencias.forEach(freq => {
                 const osc = ctx.createOscillator();
                 const gain = ctx.createGain();
                 osc.connect(gain);
                 gain.connect(ctx.destination);
 
-                const t0 = ctx.currentTime + start;
-                osc.type = "sine";
-                osc.frequency.setValueAtTime(freq, t0);
+                // Forma de onda tipo piano (armónicos naturales)
+                const real = new Float32Array([0, 1, 0.5, 0.25, 0.1, 0.05]);
+                const imag = new Float32Array(real.length);
+                const wave = ctx.createPeriodicWave(real, imag);
+                osc.setPeriodicWave(wave);
+                osc.frequency.value = freq;
+
+                const t0 = ctx.currentTime + tiempoInicio;
                 gain.gain.setValueAtTime(0, t0);
-                gain.gain.linearRampToValueAtTime(0.6, t0 + 0.02);
-                gain.gain.exponentialRampToValueAtTime(0.001, t0 + dur);
+                gain.gain.linearRampToValueAtTime(0.25, t0 + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.001, t0 + 1.2);
+
                 osc.start(t0);
-                osc.stop(t0 + dur + 0.05);
+                osc.stop(t0 + 1.4);
             });
-        }, 1400);
+        };
+
+        // Tres acordes descendentes (Do mayor → Si menor → La menor)
+        tocarAcorde([523.25, 659.25, 783.99], 0.0);
+        tocarAcorde([493.88, 622.25, 739.99], 0.55);
+        tocarAcorde([440.00, 554.37, 659.25], 1.1);
+
+        // Segunda repetición tras una pausa
+        setTimeout(() => {
+            try {
+                tocarAcorde([523.25, 659.25, 783.99], 0.0);
+                tocarAcorde([493.88, 622.25, 739.99], 0.55);
+                tocarAcorde([440.00, 554.37, 659.25], 1.1);
+            } catch(e) {}
+        }, 2400);
 
     } catch (e) {
         console.warn("Audio no disponible:", e);
@@ -374,33 +404,9 @@ function guardarDatos() {
 }
 
 function cargarDatosGuardados() {
-    const datosGuardados = localStorage.getItem("timepucp_data");
-    
-    if (datosGuardados) {
-        try {
-            const datos = JSON.parse(datosGuardados);
-            
-            horaInicioInput.value = datos.horaInicio || "";
-            horaFinInput.value = datos.horaFin || "";
-            // Sincronizar atributo value para animación CSS
-            if (datos.horaInicio) horaInicioInput.setAttribute("value", datos.horaInicio);
-            if (datos.horaFin) horaFinInput.setAttribute("value", datos.horaFin);
-            cursoInput.value = datos.curso || "";
-            evaluacionInput.value = datos.evaluacion || "";
-            profesorInput.value = datos.profesor || "";
-            aulaInput.value = datos.aula || "";
-            claveCursoInput.value = datos.claveCurso || "";
-            fechaInput.value = datos.fecha || "";
-            fechaTexto.value = datos.fechaTexto || "";
-            
-            // Si hay horas configuradas, iniciar el contador
-            if (datos.horaInicio && datos.horaFin) {
-                iniciarCuentaRegresiva();
-            }
-        } catch (error) {
-            console.error("Error al cargar datos guardados:", error);
-        }
-    }
+    // Cada vez que se abre la página, se borra todo y se empieza desde cero.
+    localStorage.removeItem("timepucp_data");
+    localStorage.removeItem("darkMode");
 }
 
 // Guardar datos automáticamente al cambiar

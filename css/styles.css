@@ -264,11 +264,37 @@ main {
 .barra-progreso {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-    transition: width 0.5s linear;
+    background: linear-gradient(90deg, #2e7d32, #43a047); /* verde por defecto */
+    transition: width 0.5s linear, background 1.5s ease;
     border-radius: 14px;
     position: relative;
 }
+
+/* Fase 1: Verde — tiempo de sobra (0–60%) */
+.barra-progreso.fase-verde {
+    background: linear-gradient(90deg, #2e7d32, #66bb6a);
+}
+
+/* Fase 2: Amarillo — avanzando (60–80%) */
+.barra-progreso.fase-amarillo {
+    background: linear-gradient(90deg, #f57f17, #ffca28);
+}
+
+/* Fase 3: Naranja — quedan pocos minutos (80–93%) */
+.barra-progreso.fase-naranja {
+    background: linear-gradient(90deg, #e65100, #ff8f00);
+}
+
+/* Fase 4: Rojo — tiempo crítico (93–100%) */
+.barra-progreso.fase-rojo {
+    background: linear-gradient(90deg, #b71c1c, #e53935);
+}
+
+/* Dark mode: colores más vibrantes */
+body.dark .barra-progreso.fase-verde    { background: linear-gradient(90deg, #1b5e20, #00e676); }
+body.dark .barra-progreso.fase-amarillo { background: linear-gradient(90deg, #f57f17, #FFE600); }
+body.dark .barra-progreso.fase-naranja  { background: linear-gradient(90deg, #e65100, #ffab40); }
+body.dark .barra-progreso.fase-rojo     { background: linear-gradient(90deg, #b71c1c, #ff1744); }
 
 .barra-progreso::after {
     content: '';
@@ -476,10 +502,6 @@ body.dark input::placeholder {
 body.dark .barra-container {
     background: #222;
     border-color: #555;
-}
-
-body.dark .barra-progreso {
-    background: linear-gradient(90deg, #FFE600 0%, #FFC000 100%);
 }
 
 body.dark #contador {
@@ -773,6 +795,29 @@ body.dark #horaActual {
 @keyframes blink-red {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.6; }
+}
+
+/* Estado de espera: aún no ha comenzado la evaluación */
+@keyframes pulse-espera {
+    0%, 100% {
+        box-shadow: 0 0 0 0px rgba(211,47,47,0);
+        background: #1a0000;
+    }
+    50% {
+        box-shadow: 0 0 0 6px rgba(211,47,47,0.25);
+        background: #2d0000;
+    }
+}
+
+#contador.en-espera,
+#contadorSolo.en-espera {
+    color: var(--color-primary) !important;
+    animation: pulse-espera 1.2s ease-in-out infinite;
+}
+
+body.dark #contador.en-espera,
+body.dark #contadorSolo.en-espera {
+    color: #ff4444 !important;
 }
 
 .tiempo-critico {
