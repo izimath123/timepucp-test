@@ -5,6 +5,7 @@ const horaInicioInput = document.getElementById("horaInicio");
 const horaFinInput = document.getElementById("horaFin");
 const horaActualEl = document.getElementById("horaActual");
 const contadorEl = document.getElementById("contador");
+const contadorSoloEl = document.getElementById("contadorSolo");
 const barraEl = document.getElementById("barraProgreso");
 const barraContainer = document.querySelector(".barra-container");
 
@@ -21,6 +22,8 @@ const fechaTexto = document.getElementById("fechaTexto");
 const btnFullscreen = document.getElementById("btnFullscreen");
 const btnDarkMode = document.getElementById("btnDarkMode");
 const btnReset = document.getElementById("btnReset");
+const btnSoloReloj = document.getElementById("btnSoloReloj");
+const btnSalirSoloReloj = document.getElementById("btnSalirSoloReloj");
 
 // =========================
 // VARIABLES GLOBALES
@@ -65,9 +68,11 @@ function iniciarCuentaRegresiva() {
 
     if (!horaInicioInput.value || !horaFinInput.value) {
         contadorEl.textContent = "00:00:00";
+        contadorSoloEl.textContent = "00:00:00";
         barraEl.style.width = "0%";
         barraContainer.setAttribute("aria-valuenow", "0");
         contadorEl.classList.remove("warning", "tiempo-critico");
+        contadorSoloEl.classList.remove("warning", "tiempo-critico");
         return;
     }
 
@@ -96,6 +101,7 @@ function iniciarCuentaRegresiva() {
 
         if (restante <= 0) {
             contadorEl.textContent = "00:00:00";
+            contadorSoloEl.textContent = "00:00:00";
             barraEl.style.width = "100%";
             barraContainer.setAttribute("aria-valuenow", "100");
             contadorEl.classList.remove("warning");
@@ -115,19 +121,24 @@ function iniciarCuentaRegresiva() {
         const segundosStr = String(segundos).padStart(2, "0");
 
         contadorEl.textContent = `${horasStr}:${minutosStr}:${segundosStr}`;
+        contadorSoloEl.textContent = `${horasStr}:${minutosStr}:${segundosStr}`;
 
         // Advertencia visual cuando quedan menos de 5 minutos
         if (restante <= 300000 && !contadorEl.classList.contains("warning")) {
             contadorEl.classList.add("warning");
+            contadorSoloEl.classList.add("warning");
         } else if (restante > 300000) {
             contadorEl.classList.remove("warning");
+            contadorSoloEl.classList.remove("warning");
         }
 
         // Advertencia crítica cuando quedan menos de 1 minuto
         if (restante <= 60000) {
             contadorEl.classList.add("tiempo-critico");
+            contadorSoloEl.classList.add("tiempo-critico");
         } else {
             contadorEl.classList.remove("tiempo-critico");
+            contadorSoloEl.classList.remove("tiempo-critico");
         }
 
         // Actualizar barra de progreso
@@ -216,6 +227,20 @@ btnDarkMode.addEventListener("click", () => {
 });
 
 // =========================
+// MODO SOLO RELOJ
+// =========================
+function activarSoloReloj() {
+    document.body.classList.add("solo-reloj");
+}
+
+function salirSoloReloj() {
+    document.body.classList.remove("solo-reloj");
+}
+
+btnSoloReloj.addEventListener("click", activarSoloReloj);
+btnSalirSoloReloj.addEventListener("click", salirSoloReloj);
+
+// =========================
 // BOTÓN RESET
 // =========================
 btnReset.addEventListener("click", () => {
@@ -236,6 +261,7 @@ btnReset.addEventListener("click", () => {
         // Reiniciar contador
         clearInterval(intervaloCuenta);
         contadorEl.textContent = "00:00:00";
+        contadorSoloEl.textContent = "00:00:00";
         barraEl.style.width = "0%";
         barraContainer.setAttribute("aria-valuenow", "0");
         contadorEl.classList.remove("warning", "tiempo-critico");
@@ -334,6 +360,11 @@ document.addEventListener("keydown", (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === "r") {
         e.preventDefault();
         btnReset.click();
+    }
+
+    // Escape para salir del modo solo reloj
+    if (e.key === "Escape" && document.body.classList.contains("solo-reloj")) {
+        salirSoloReloj();
     }
 });
 

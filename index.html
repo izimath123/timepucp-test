@@ -53,6 +53,11 @@
             <div class="barra-progreso" id="barraProgreso"></div>
         </div>
 
+        <!-- Contador solo visible en modo solo reloj -->
+        <div class="contador-solo-reloj">
+            <span id="contadorSolo" role="timer">00:00:00</span>
+        </div>
+
         <div class="info">
             <!-- Fila 1 -->
             <div class="fila fila-1">
@@ -112,6 +117,10 @@
                         <span class="icon">🌙</span>
                         <span class="text">Modo oscuro</span>
                     </button>
+                    <button id="btnSoloReloj" class="btn-action" aria-label="Modo solo reloj">
+                        <span class="icon">🕐</span>
+                        <span class="text">Solo reloj</span>
+                    </button>
                     <button id="btnReset" class="btn-action btn-secondary" aria-label="Reiniciar temporizador">
                         <span class="icon">↻</span>
                         <span class="text">Reiniciar</span>
@@ -121,6 +130,13 @@
         </div>
     </main>
 
+    <!-- Botón flotante para salir del modo solo reloj -->
+    <button id="btnSalirSoloReloj" class="btn-salir-solo" aria-label="Salir del modo solo reloj">
+        <span class="icon">✕</span>
+        <span class="text">Salir</span>
+    </button>
+
     <script src="js/timer.js"></script>
+
 </body>
 </html>

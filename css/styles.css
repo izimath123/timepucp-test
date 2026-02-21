@@ -180,7 +180,8 @@ header {
     transition: all var(--transition-speed);
 }
 
-#contador.warning {
+#contador.warning,
+#contadorSolo.warning {
     animation: pulse-warning 1s ease-in-out infinite;
 }
 
@@ -768,6 +769,11 @@ body.dark #horaActual {
     color: var(--color-primary) !important;
 }
 
+/* En modo oscuro el crítico también parpadea en rojo */
+body.dark #contadorSolo.tiempo-critico {
+    color: #ff4444 !important;
+}
+
 /* Transición suave para cambios de tema */
 * {
     transition-property: background-color, color, border-color;
@@ -780,4 +786,116 @@ body.dark #horaActual {
     body {
         font-size: 18px;
     }
+}
+
+/* =========================
+   MODO SOLO RELOJ
+========================= */
+
+/* Contenedor del contador solo — oculto por defecto */
+.contador-solo-reloj {
+    display: none;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#contadorSolo {
+    background: var(--color-timer-bg);
+    color: var(--color-timer-text);
+    padding: 20px 48px;
+    border-radius: var(--border-radius);
+    font-size: clamp(50px, 6vw, 90px);
+    font-weight: 700;
+    letter-spacing: 4px;
+    font-family: "Courier New", "SF Mono", "Monaco", monospace;
+    font-variant-numeric: tabular-nums;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+body.dark #contadorSolo {
+    background: #000;
+    color: var(--color-timer-dark);
+    box-shadow: 0 4px 12px rgba(0,255,204,0.2);
+}
+
+/* En modo solo reloj: ocultar header, campos y botones */
+body.solo-reloj header,
+body.solo-reloj .info {
+    display: none !important;
+}
+
+body.solo-reloj main {
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    padding: 0 40px;
+    overflow: hidden;
+}
+
+body.solo-reloj .hora-actual {
+    margin: 0 0 30px 0;
+}
+
+/* Hora grande centrada */
+body.solo-reloj #horaActual {
+    font-size: clamp(60px, 11vw, 180px);
+    text-align: center;
+    min-width: unset;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+}
+
+/* Barra visible y más prominente */
+body.solo-reloj .barra-container {
+    width: calc(100% - 80px);
+    height: 36px;
+    margin: 0 auto 0 auto;
+}
+
+/* Mostrar el contador solo en modo solo reloj */
+body.solo-reloj .contador-solo-reloj {
+    display: flex;
+}
+
+/* Botón flotante para salir del modo solo reloj */
+.btn-salir-solo {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 999;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--border-radius);
+    background: rgba(80, 80, 80, 0.5);
+    color: #fff;
+    cursor: pointer;
+    display: none;              /* oculto por defecto */
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(6px);
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+
+.btn-salir-solo:hover {
+    background: rgba(211, 47, 47, 0.85);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(211,47,47,0.3);
+}
+
+/* Mostrar botón flotante solo en modo solo reloj */
+body.solo-reloj .btn-salir-solo {
+    display: flex;
+}
+
+/* Dark mode en solo reloj */
+body.dark.solo-reloj .btn-salir-solo {
+    background: rgba(30, 30, 30, 0.6);
+}
+
+body.dark.solo-reloj .btn-salir-solo:hover {
+    background: rgba(211, 47, 47, 0.85);
 }
