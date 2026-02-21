@@ -316,7 +316,7 @@ main {
     letter-spacing: 0.02em;
     border: 2px solid var(--color-border-light);
     border-radius: var(--border-radius);
-    background: var(--color-surface-light);
+    background: #e8f4fd;
     color: inherit;
     transition: all var(--transition-speed);
 }
@@ -425,7 +425,7 @@ body.dark header {
 
 body.dark input,
 body.dark input[type="time"] {
-    background: #2a2a2a;
+    background: #1a2a3a;
     color: var(--color-text-dark);
     border-color: #555;
 }
