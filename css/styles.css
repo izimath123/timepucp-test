@@ -98,6 +98,17 @@ header {
     color: inherit;
     transition: all var(--transition-speed);
     cursor: pointer;
+    user-select: none;
+}
+
+/* Toda la superficie del input de hora es clickeable visualmente */
+.hora-input input[type="time"]::-webkit-datetime-edit,
+.hora-input input[type="time"]::-webkit-datetime-edit-fields-wrapper,
+.hora-input input[type="time"]::-webkit-datetime-edit-hour-field,
+.hora-input input[type="time"]::-webkit-datetime-edit-minute-field,
+.hora-input input[type="time"]::-webkit-datetime-edit-ampm-field,
+.hora-input input[type="time"]::-webkit-datetime-edit-text {
+    cursor: pointer;
 }
 
 /* Ícono del reloj: rojo vibrante por defecto, más llamativo al hover */

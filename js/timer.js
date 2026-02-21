@@ -374,8 +374,33 @@ function guardarDatos() {
 }
 
 function cargarDatosGuardados() {
-    // Cada vez que se abre la página, se borra todo y se empieza desde cero.
-    localStorage.removeItem("timepucp_data");
+    const datosGuardados = localStorage.getItem("timepucp_data");
+    
+    if (datosGuardados) {
+        try {
+            const datos = JSON.parse(datosGuardados);
+            
+            horaInicioInput.value = datos.horaInicio || "";
+            horaFinInput.value = datos.horaFin || "";
+            // Sincronizar atributo value para animación CSS
+            if (datos.horaInicio) horaInicioInput.setAttribute("value", datos.horaInicio);
+            if (datos.horaFin) horaFinInput.setAttribute("value", datos.horaFin);
+            cursoInput.value = datos.curso || "";
+            evaluacionInput.value = datos.evaluacion || "";
+            profesorInput.value = datos.profesor || "";
+            aulaInput.value = datos.aula || "";
+            claveCursoInput.value = datos.claveCurso || "";
+            fechaInput.value = datos.fecha || "";
+            fechaTexto.value = datos.fechaTexto || "";
+            
+            // Si hay horas configuradas, iniciar el contador
+            if (datos.horaInicio && datos.horaFin) {
+                iniciarCuentaRegresiva();
+            }
+        } catch (error) {
+            console.error("Error al cargar datos guardados:", error);
+        }
+    }
 }
 
 // Guardar datos automáticamente al cambiar
@@ -387,6 +412,15 @@ function cargarDatosGuardados() {
 // =========================
 // EVENT LISTENERS
 // =========================
+
+// Abrir el picker al hacer click en cualquier parte del input de hora
+horaInicioInput.addEventListener("click", () => {
+    horaInicioInput.showPicker?.();
+});
+horaFinInput.addEventListener("click", () => {
+    horaFinInput.showPicker?.();
+});
+
 horaInicioInput.addEventListener("change", () => {
     horaInicioInput.setAttribute("value", horaInicioInput.value);
     iniciarCuentaRegresiva();
