@@ -223,6 +223,8 @@ btnReset.addEventListener("click", () => {
         // Limpiar inputs
         horaInicioInput.value = "";
         horaFinInput.value = "";
+        horaInicioInput.removeAttribute("value");
+        horaFinInput.removeAttribute("value");
         cursoInput.value = "";
         evaluacionInput.value = "";
         profesorInput.value = "";
@@ -273,6 +275,9 @@ function cargarDatosGuardados() {
             
             horaInicioInput.value = datos.horaInicio || "";
             horaFinInput.value = datos.horaFin || "";
+            // Sincronizar atributo value para animación CSS
+            if (datos.horaInicio) horaInicioInput.setAttribute("value", datos.horaInicio);
+            if (datos.horaFin) horaFinInput.setAttribute("value", datos.horaFin);
             cursoInput.value = datos.curso || "";
             evaluacionInput.value = datos.evaluacion || "";
             profesorInput.value = datos.profesor || "";
@@ -300,8 +305,14 @@ function cargarDatosGuardados() {
 // =========================
 // EVENT LISTENERS
 // =========================
-horaInicioInput.addEventListener("change", iniciarCuentaRegresiva);
-horaFinInput.addEventListener("change", iniciarCuentaRegresiva);
+horaInicioInput.addEventListener("change", () => {
+    horaInicioInput.setAttribute("value", horaInicioInput.value);
+    iniciarCuentaRegresiva();
+});
+horaFinInput.addEventListener("change", () => {
+    horaFinInput.setAttribute("value", horaFinInput.value);
+    iniciarCuentaRegresiva();
+});
 
 // =========================
 // ATAJOS DE TECLADO

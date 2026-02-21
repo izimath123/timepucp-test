@@ -118,6 +118,23 @@ header {
     box-shadow: 0 0 8px rgba(211, 47, 47, 0.4);
 }
 
+/* Pulso en el borde cuando el input está vacío (sin hora configurada) */
+@keyframes pulse-border {
+    0%   { border-color: var(--color-border-light); box-shadow: 0 0 0 0px rgba(211,47,47,0); }
+    50%  { border-color: var(--color-primary);      box-shadow: 0 0 0 4px rgba(211,47,47,0.2); }
+    100% { border-color: var(--color-border-light); box-shadow: 0 0 0 0px rgba(211,47,47,0); }
+}
+
+.hora-input input[type="time"]:not([value]):not(:focus),
+.hora-input input[type="time"][value=""]:not(:focus) {
+    animation: pulse-border 2s ease-in-out infinite;
+}
+
+.hora-input input[type="time"]:hover,
+.hora-input input[type="time"]:focus {
+    animation: none;
+}
+
 .hora-input input[type="time"]:hover {
     border-color: var(--color-primary);
     box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.08);
