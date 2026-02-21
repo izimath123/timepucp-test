@@ -285,14 +285,9 @@ main {
     grid-template-columns: 1fr 1fr;
 }
 
-/* ----- FILA 3: FECHA ----- */
+/* ----- FILA 3: CLAVE + FECHA ----- */
 .fila-3 {
-    grid-template-columns: 1fr;
-    max-width: 700px;  /* Aumentado de 600px a 700px */
-}
-
-.fila-3 .campo input {
-    max-width: 450px;  /* Limitar ancho del input de fecha */
+    grid-template-columns: 1fr 1fr;
 }
 
 /* ----- FILA 4: BOTONES ----- */
@@ -373,6 +368,11 @@ main {
 /* Ajustar Evaluación para que tenga ancho similar */
 .campo-evaluacion label {
     font-size: 28px;  /* Ajustado proporcionalmente (antes 34px) */
+}
+
+/* Clave del curso */
+.campo-clave label {
+    font-size: 27px;  /* Consistente con otros labels de fila 3 */
 }
 
 /* =========================
@@ -600,10 +600,6 @@ body.dark .hora-input small {
         gap: 32px;
     }
     
-    .fila-3 {
-        max-width: 900px;  /* Ancho mayor en pantallas 4K */
-    }
-    
     .btn-action {
         font-size: 24px;
         padding: 22px 40px;
@@ -627,10 +623,6 @@ body.dark .hora-input small {
     .fila-3 {
         grid-template-columns: 1fr;
         gap: 20px;
-    }
-    
-    .fila-3 {
-        max-width: 100%;
     }
     
     .info {

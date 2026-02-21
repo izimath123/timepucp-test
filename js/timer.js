@@ -13,6 +13,7 @@ const cursoInput = document.getElementById("curso");
 const evaluacionInput = document.getElementById("evaluacion");
 const profesorInput = document.getElementById("profesor");
 const aulaInput = document.getElementById("aula");
+const claveCursoInput = document.getElementById("claveCurso");
 const fechaInput = document.getElementById("fecha");
 const fechaTexto = document.getElementById("fechaTexto");
 
@@ -226,6 +227,7 @@ btnReset.addEventListener("click", () => {
         evaluacionInput.value = "";
         profesorInput.value = "";
         aulaInput.value = "";
+        claveCursoInput.value = "";
         fechaInput.value = "";
         fechaTexto.value = "";
         
@@ -254,6 +256,7 @@ function guardarDatos() {
         evaluacion: evaluacionInput.value,
         profesor: profesorInput.value,
         aula: aulaInput.value,
+        claveCurso: claveCursoInput.value,
         fecha: fechaInput.value,
         fechaTexto: fechaTexto.value
     };
@@ -274,6 +277,7 @@ function cargarDatosGuardados() {
             evaluacionInput.value = datos.evaluacion || "";
             profesorInput.value = datos.profesor || "";
             aulaInput.value = datos.aula || "";
+            claveCursoInput.value = datos.claveCurso || "";
             fechaInput.value = datos.fecha || "";
             fechaTexto.value = datos.fechaTexto || "";
             
@@ -288,7 +292,7 @@ function cargarDatosGuardados() {
 }
 
 // Guardar datos automáticamente al cambiar
-[cursoInput, evaluacionInput, profesorInput, aulaInput].forEach(input => {
+[cursoInput, evaluacionInput, profesorInput, aulaInput, claveCursoInput].forEach(input => {
     input.addEventListener("change", guardarDatos);
     input.addEventListener("blur", guardarDatos);
 });
