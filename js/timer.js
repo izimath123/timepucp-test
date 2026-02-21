@@ -111,8 +111,9 @@ function iniciarCuentaRegresiva() {
             contadorSoloEl.classList.remove("warning");
             contadorSoloEl.classList.add("tiempo-critico");
             clearInterval(intervaloCuenta);
-            // Mostrar modal de fin
+            // Mostrar modal de fin con alerta sonora
             modalFin.classList.add("visible");
+            reproducirAlerta();
             return;
         }
 
@@ -251,6 +252,65 @@ btnSalirSoloReloj.addEventListener("click", salirSoloReloj);
 // =========================
 function cerrarModal() {
     modalFin.classList.remove("visible");
+}
+
+function reproducirAlerta() {
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+
+        // Tres beeps descendentes tipo alarma
+        const beeps = [
+            { freq: 880, start: 0.0, dur: 0.18 },
+            { freq: 880, start: 0.25, dur: 0.18 },
+            { freq: 880, start: 0.50, dur: 0.18 },
+            { freq: 660, start: 0.85, dur: 0.35 },
+        ];
+
+        beeps.forEach(({ freq, start, dur }) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(freq, ctx.currentTime + start);
+
+            gain.gain.setValueAtTime(0, ctx.currentTime + start);
+            gain.gain.linearRampToValueAtTime(0.6, ctx.currentTime + start + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur);
+
+            osc.start(ctx.currentTime + start);
+            osc.stop(ctx.currentTime + start + dur + 0.05);
+        });
+
+        // Repetir 3 veces con pausa entre repeticiones
+        let repeticiones = 0;
+        const intervaloAlerta = setInterval(() => {
+            repeticiones++;
+            if (repeticiones >= 2) {
+                clearInterval(intervaloAlerta);
+                return;
+            }
+            beeps.forEach(({ freq, start, dur }) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                const t0 = ctx.currentTime + start;
+                osc.type = "sine";
+                osc.frequency.setValueAtTime(freq, t0);
+                gain.gain.setValueAtTime(0, t0);
+                gain.gain.linearRampToValueAtTime(0.6, t0 + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.001, t0 + dur);
+                osc.start(t0);
+                osc.stop(t0 + dur + 0.05);
+            });
+        }, 1400);
+
+    } catch (e) {
+        console.warn("Audio no disponible:", e);
+    }
 }
 
 btnCerrarModal.addEventListener("click", cerrarModal);
