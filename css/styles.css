@@ -272,20 +272,12 @@ main {
 
 .fila {
     display: grid;
-    gap: 30px;  /* Reducido de 40px a 30px */
+    gap: 30px;
 }
 
-/* ----- FILA 1: CURSO + EVALUACIÓN ----- */
-.fila-1 {
-    grid-template-columns: 1fr 1fr;
-}
-
-/* ----- FILA 2: PROFESOR + HORARIO ----- */
-.fila-2 {
-    grid-template-columns: 1fr 1fr;
-}
-
-/* ----- FILA 3: CLAVE + FECHA ----- */
+/* ----- FILAS DE DATOS: 2 columnas iguales ----- */
+.fila-1,
+.fila-2,
 .fila-3 {
     grid-template-columns: 1fr 1fr;
 }
@@ -300,43 +292,27 @@ main {
 /* =========================
    CAMPOS INDIVIDUALES
 ========================= */
+
+/* Cada campo usa grid interno: label auto, input ocupa el resto */
 .campo {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr;
     align-items: center;
     gap: 14px;
 }
 
 .campo label {
-    font-size: 30px;   /* Reducido de 36px a 30px */
+    font-size: 30px;
     font-weight: 900;
     white-space: nowrap;
-    flex-shrink: 0;
-    min-width: fit-content;
-}
-
-/* Alineación vertical de labels columna izquierda:
-   "Clave del curso:" es el label más largo → los demás se igualan a él */
-.fila-1 .campo:first-child label,
-.fila-2 .campo:first-child label,
-.fila-3 .campo:first-child label {
-    min-width: 270px;
-}
-
-/* Alineación vertical de labels columna derecha:
-   "Horario de práctica:" es el más largo */
-.fila-1 .campo:last-child label,
-.fila-2 .campo:last-child label,
-.fila-3 .campo:last-child label {
-    min-width: 310px;
 }
 
 .campo input {
-    flex: 1;
-    min-width: 0; /* Permite que el input se reduzca si es necesario */
-    height: clamp(50px, 5vh, 60px);  /* Reducido de 58-70px a 50-60px */
-    font-size: clamp(24px, 2.5vw, 28px);  /* Reducido de 28-34px a 24-28px */
+    min-width: 0;
+    height: clamp(50px, 5vh, 60px);
+    font-size: clamp(24px, 2.5vw, 28px);
     font-weight: 800;
-    padding: 10px 16px;  /* Reducido padding */
+    padding: 10px 16px;
     letter-spacing: 0.02em;
     border: 2px solid var(--color-border-light);
     border-radius: var(--border-radius);
@@ -371,29 +347,17 @@ main {
    AJUSTES ESPECÍFICOS DE CAMPOS
 ========================= */
 
-/* Horario de práctica: mismo tamaño que el resto */
-.campo-horario label {
-    font-size: 30px;
-}
-
-/* Input del horario acotado */
-.campo-horario input {
-    max-width: 220px;
-}
-
-/* Evaluación: mismo tamaño */
-.campo-evaluacion label {
-    font-size: 30px;
-}
-
-/* Clave del curso */
-.campo-clave label {
-    font-size: 30px;
-}
-
-/* Fecha */
+/* Todos los labels al mismo tamaño — 30px */
+.campo-horario label,
+.campo-evaluacion label,
+.campo-clave label,
 .campo-fecha label {
     font-size: 30px;
+}
+
+/* Input del horario: ocupa el espacio disponible como los demás */
+.campo-horario input {
+    max-width: unset;
 }
 
 /* =========================
@@ -530,29 +494,15 @@ body.dark .hora-input small {
         font-size: 42px;
     }
     
-    .fila-1 .campo:first-child label,
-    .fila-2 .campo:first-child label,
-    .fila-3 .campo:first-child label {
-        min-width: 380px;
-    }
-    
-    .fila-1 .campo:last-child label,
-    .fila-2 .campo:last-child label,
-    .fila-3 .campo:last-child label {
-        min-width: 440px;
-    }
-    }
-    
-    .campo-horario label {
-        font-size: 36px;  /* Proporcionalmente más pequeño */
+    .campo-horario label,
+    .campo-evaluacion label,
+    .campo-clave label,
+    .campo-fecha label {
+        font-size: 42px;
     }
     
     .campo-horario input {
-        max-width: 280px;  /* Limitar ancho en pantallas grandes */
-    }
-    
-    .campo-evaluacion label {
-        font-size: 38px;
+        max-width: unset;
     }
     
     .campo input {
@@ -562,7 +512,7 @@ body.dark .hora-input small {
     }
     
     .info {
-        padding: 0 50px 30px 50px;  /* Reducido de 60px a 50px */
+        padding: 0 50px 30px 50px;
     }
     
     .btn-action {
@@ -612,28 +562,15 @@ body.dark .hora-input small {
         font-size: 50px;
     }
     
-    .campo-horario label {
+    .campo-horario label,
+    .campo-evaluacion label,
+    .campo-clave label,
+    .campo-fecha label {
         font-size: 50px;
-    }
-    
-    .campo-evaluacion label {
-        font-size: 50px;
-    }
-    
-    .fila-1 .campo:first-child label,
-    .fila-2 .campo:first-child label,
-    .fila-3 .campo:first-child label {
-        min-width: 460px;
-    }
-    
-    .fila-1 .campo:last-child label,
-    .fila-2 .campo:last-child label,
-    .fila-3 .campo:last-child label {
-        min-width: 530px;
     }
     
     .campo-horario input {
-        max-width: 320px;  /* Limitar ancho en 4K */
+        max-width: unset;
     }
     
     .campo input {
@@ -676,14 +613,12 @@ body.dark .hora-input small {
     }
     
     .campo {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
+        grid-template-columns: auto 1fr;
+        gap: 10px;
     }
     
     .campo label {
-        font-size: 24px;
-        min-width: unset !important;
+        font-size: 22px;
     }
     
     .campo input {
