@@ -314,6 +314,22 @@ main {
     min-width: fit-content;
 }
 
+/* Alineación vertical de labels columna izquierda:
+   "Clave del curso:" es el label más largo → los demás se igualan a él */
+.fila-1 .campo:first-child label,
+.fila-2 .campo:first-child label,
+.fila-3 .campo:first-child label {
+    min-width: 270px;
+}
+
+/* Alineación vertical de labels columna derecha:
+   "Horario de práctica:" es el más largo */
+.fila-1 .campo:last-child label,
+.fila-2 .campo:last-child label,
+.fila-3 .campo:last-child label {
+    min-width: 310px;
+}
+
 .campo input {
     flex: 1;
     min-width: 0; /* Permite que el input se reduzca si es necesario */
@@ -355,24 +371,29 @@ main {
    AJUSTES ESPECÍFICOS DE CAMPOS
 ========================= */
 
-/* Reducir tamaño de labels largos para mantener balance */
+/* Horario de práctica: mismo tamaño que el resto */
 .campo-horario label {
-    font-size: 27px;  /* Ajustado proporcionalmente (antes 32px) */
+    font-size: 30px;
 }
 
-/* Input del horario más pequeño ya que necesita poco espacio */
+/* Input del horario acotado */
 .campo-horario input {
-    max-width: 220px;  /* Reducido de 250px */
+    max-width: 220px;
 }
 
-/* Ajustar Evaluación para que tenga ancho similar */
+/* Evaluación: mismo tamaño */
 .campo-evaluacion label {
-    font-size: 28px;  /* Ajustado proporcionalmente (antes 34px) */
+    font-size: 30px;
 }
 
 /* Clave del curso */
 .campo-clave label {
-    font-size: 27px;  /* Consistente con otros labels de fila 3 */
+    font-size: 30px;
+}
+
+/* Fecha */
+.campo-fecha label {
+    font-size: 30px;
 }
 
 /* =========================
@@ -509,6 +530,19 @@ body.dark .hora-input small {
         font-size: 42px;
     }
     
+    .fila-1 .campo:first-child label,
+    .fila-2 .campo:first-child label,
+    .fila-3 .campo:first-child label {
+        min-width: 380px;
+    }
+    
+    .fila-1 .campo:last-child label,
+    .fila-2 .campo:last-child label,
+    .fila-3 .campo:last-child label {
+        min-width: 440px;
+    }
+    }
+    
     .campo-horario label {
         font-size: 36px;  /* Proporcionalmente más pequeño */
     }
@@ -579,15 +613,27 @@ body.dark .hora-input small {
     }
     
     .campo-horario label {
-        font-size: 42px;  /* Proporcionalmente más pequeño */
+        font-size: 50px;
+    }
+    
+    .campo-evaluacion label {
+        font-size: 50px;
+    }
+    
+    .fila-1 .campo:first-child label,
+    .fila-2 .campo:first-child label,
+    .fila-3 .campo:first-child label {
+        min-width: 460px;
+    }
+    
+    .fila-1 .campo:last-child label,
+    .fila-2 .campo:last-child label,
+    .fila-3 .campo:last-child label {
+        min-width: 530px;
     }
     
     .campo-horario input {
         max-width: 320px;  /* Limitar ancho en 4K */
-    }
-    
-    .campo-evaluacion label {
-        font-size: 45px;
     }
     
     .campo input {
@@ -637,6 +683,7 @@ body.dark .hora-input small {
     
     .campo label {
         font-size: 24px;
+        min-width: unset !important;
     }
     
     .campo input {
