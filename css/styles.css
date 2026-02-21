@@ -157,7 +157,7 @@ header {
 }
 
 .label-restante {
-    font-size: 24px;  /* Reducido de 28px a 24px */
+    font-size: 30px;
     font-weight: 700;
     white-space: nowrap;
 }
@@ -440,24 +440,25 @@ main {
 ========================= */
 body.dark {
     background: var(--color-bg-dark);
-    color: var(--color-text-dark);
+    color: #FFE600; /* Amarillo para texto general y labels */
 }
 
 body.dark header {
     background: var(--color-surface-dark);
-    border-bottom-color: var(--color-border-dark);
+    border-bottom-color: #444;
     box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
+/* Inputs: fondo negro, texto blanco, sin borde visible */
 body.dark input,
 body.dark input[type="time"] {
-    background: #1a2a3a;
-    color: var(--color-text-dark);
-    border-color: #555;
+    background: #000000;
+    color: #ffffff;
+    border-color: #000000;
 }
 
 body.dark input::placeholder {
-    color: #666;
+    color: #555;
 }
 
 body.dark .barra-container {
@@ -466,17 +467,29 @@ body.dark .barra-container {
 }
 
 body.dark .barra-progreso {
-    background: linear-gradient(90deg, #ff5252 0%, #ff1744 100%);
+    background: linear-gradient(90deg, #FFE600 0%, #FFC000 100%);
 }
 
 body.dark #contador {
     background: #000;
-    color: var(--color-timer-dark);
+    color: var(--color-timer-dark); /* cian — ya contrasta bien */
     box-shadow: 0 4px 12px rgba(0,255,204,0.2);
 }
 
-body.dark .hora-input small {
-    color: #999;
+/* Labels de campos en amarillo */
+body.dark .campo label {
+    color: #FFE600;
+}
+
+/* Labels del header en amarillo */
+body.dark .hora-input label,
+body.dark .label-restante {
+    color: #FFE600;
+}
+
+/* Hora actual en amarillo */
+body.dark #horaActual {
+    color: #FFE600;
 }
 
 /* =========================
