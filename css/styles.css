@@ -16,7 +16,7 @@
     --color-timer-bg: #000000;
     --color-timer-text: #ffffff;
     --color-timer-dark: #00ffcc;
-    
+
     --transition-speed: 0.3s;
     --border-radius: 8px;
     --spacing-unit: 8px;
@@ -28,14 +28,15 @@
     padding: 0;
 }
 
-html, body {
+html,
+body {
     height: 100%;
     overflow-x: hidden;
 }
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-    background: var(--color-bg-light);
+    background: radial-gradient(ellipse at top, #ffffff 0%, #eef2f7 100%);
     color: var(--color-text-light);
     margin: 0;
     padding: 0;
@@ -51,8 +52,9 @@ body {
 header {
     background: var(--color-surface-light);
     padding: 12px 40px;
-    border-bottom: 2px solid var(--color-border-light);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-bottom: 3px solid transparent;
+    border-image: linear-gradient(90deg, transparent, var(--color-primary), transparent) 1;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
     transition: all var(--transition-speed);
 }
 
@@ -123,15 +125,26 @@ header {
 }
 
 .hora-input input[type="time"]::-webkit-calendar-picker-indicator:hover {
-    filter: invert(19%) sepia(96%) saturate(2800%) hue-rotate(350deg) brightness(90%) contrast(110%) drop-shadow(0 0 6px rgba(211,47,47,0.9)) drop-shadow(0 0 12px rgba(211,47,47,0.6));
+    filter: invert(19%) sepia(96%) saturate(2800%) hue-rotate(350deg) brightness(90%) contrast(110%) drop-shadow(0 0 6px rgba(211, 47, 47, 0.9)) drop-shadow(0 0 12px rgba(211, 47, 47, 0.6));
     transform: scale(1.35);
 }
 
 /* Pulso en el borde cuando el input está vacío (sin hora configurada) */
 @keyframes pulse-border {
-    0%   { border-color: var(--color-border-light); box-shadow: 0 0 0 0px rgba(211,47,47,0); }
-    50%  { border-color: var(--color-primary);      box-shadow: 0 0 0 4px rgba(211,47,47,0.2); }
-    100% { border-color: var(--color-border-light); box-shadow: 0 0 0 0px rgba(211,47,47,0); }
+    0% {
+        border-color: var(--color-border-light);
+        box-shadow: 0 0 0 0px rgba(211, 47, 47, 0);
+    }
+
+    50% {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 4px rgba(211, 47, 47, 0.2);
+    }
+
+    100% {
+        border-color: var(--color-border-light);
+        box-shadow: 0 0 0 0px rgba(211, 47, 47, 0);
+    }
 }
 
 .hora-input input[type="time"]:not([value]):not(:focus),
@@ -176,18 +189,21 @@ header {
 #contador {
     background: var(--color-timer-bg);
     color: var(--color-timer-text);
-    padding: 12px 24px;  /* Reducido padding */
+    padding: 12px 24px;
+    /* Reducido padding */
     border-radius: var(--border-radius);
-    font-size: 30px;  /* Reducido de 36px a 30px */
+    font-size: 30px;
+    /* Reducido de 36px a 30px */
     font-weight: 700;
-    min-width: 180px;  /* Reducido de 200px a 180px */
+    min-width: 180px;
+    /* Reducido de 200px a 180px */
     display: flex;
     align-items: center;
     justify-content: center;
     letter-spacing: 2px;
     font-family: "Courier New", "SF Mono", "Monaco", monospace;
     font-variant-numeric: tabular-nums;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     transition: all var(--transition-speed);
 }
 
@@ -197,8 +213,15 @@ header {
 }
 
 @keyframes pulse-warning {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
 }
 
 /* =========================
@@ -227,12 +250,12 @@ main {
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin: 15px 0 15px 0;  /* Reducido de 30px/20px a 15px */
+    flex: 1;
     user-select: none;
 }
 
 #horaActual {
-    font-size: clamp(80px, 11vw, 150px);  /* Reducido de 100px-180px a 80px-150px */
+    font-size: clamp(80px, 11vw, 150px);
     font-weight: 900;
     line-height: 1;
     white-space: nowrap;
@@ -240,8 +263,8 @@ main {
     min-width: 12ch;
     text-align: center;
     font-variant-numeric: tabular-nums;
-    letter-spacing: 0.02em;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    letter-spacing: -0.02em;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* =========================
@@ -250,21 +273,45 @@ main {
 
 .barra-container {
     width: calc(100% - 80px);
-    max-width: 1800px;  /* Límite máximo para pantallas muy grandes */
-    height: 28px;  /* Reducido de 32px a 28px */
-    margin: 0 auto 25px auto;  /* Reducido margin-bottom de 40px a 25px */
+    max-width: 1800px;
+    height: 28px;
+    margin: 0 auto 25px auto;
     border: 2px solid var(--color-border-light);
     background: #eee;
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: all var(--transition-speed);
+    position: relative;
+}
+
+.barra-porcentaje {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    font-weight: 800;
+    font-family: 'Inter', sans-serif;
+    color: #555;
+    z-index: 2;
+    pointer-events: none;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    letter-spacing: 0.03em;
+    transition: color var(--transition-speed);
+}
+
+/* When bar is past 70%, text should be white to contrast with colored bar */
+body.dark .barra-porcentaje {
+    color: #aaa;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .barra-progreso {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, #2e7d32, #43a047); /* verde por defecto */
+    background: linear-gradient(90deg, #2e7d32, #43a047);
+    /* verde por defecto */
     transition: width 0.5s linear, background 1.5s ease;
     border-radius: 14px;
     position: relative;
@@ -291,10 +338,21 @@ main {
 }
 
 /* Dark mode: colores más vibrantes */
-body.dark .barra-progreso.fase-verde    { background: linear-gradient(90deg, #1b5e20, #00e676); }
-body.dark .barra-progreso.fase-amarillo { background: linear-gradient(90deg, #f57f17, #FFE600); }
-body.dark .barra-progreso.fase-naranja  { background: linear-gradient(90deg, #e65100, #ffab40); }
-body.dark .barra-progreso.fase-rojo     { background: linear-gradient(90deg, #b71c1c, #ff1744); }
+body.dark .barra-progreso.fase-verde {
+    background: linear-gradient(90deg, #1b5e20, #00e676);
+}
+
+body.dark .barra-progreso.fase-amarillo {
+    background: linear-gradient(90deg, #f57f17, #FFE600);
+}
+
+body.dark .barra-progreso.fase-naranja {
+    background: linear-gradient(90deg, #e65100, #ffab40);
+}
+
+body.dark .barra-progreso.fase-rojo {
+    background: linear-gradient(90deg, #b71c1c, #ff1744);
+}
 
 .barra-progreso::after {
     content: '';
@@ -303,18 +361,21 @@ body.dark .barra-progreso.fase-rojo     { background: linear-gradient(90deg, #b7
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(
-        90deg,
-        rgba(255,255,255,0) 0%,
-        rgba(255,255,255,0.3) 50%,
-        rgba(255,255,255,0) 100%
-    );
+    background: linear-gradient(90deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.3) 50%,
+            rgba(255, 255, 255, 0) 100%);
     animation: shimmer 2s infinite;
 }
 
 @keyframes shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
 }
 
 /* =========================
@@ -322,11 +383,12 @@ body.dark .barra-progreso.fase-rojo     { background: linear-gradient(90deg, #b7
 ========================= */
 
 .info {
-    padding: 0 40px 20px 40px;  /* Reducido padding bottom */
+    padding: 0 40px 20px 40px;
     display: flex;
     flex-direction: column;
-    gap: 20px;  /* Reducido de 28px a 20px */
-    margin-bottom: 15px;  /* Reducido de 20px */
+    gap: 16px;
+    margin-bottom: 10px;
+    margin-top: 0;
     max-width: 1920px;
     margin-left: auto;
     margin-right: auto;
@@ -383,12 +445,13 @@ body.dark .barra-progreso.fase-rojo     { background: linear-gradient(90deg, #b7
     background: #e8f4fd;
     color: inherit;
     transition: all var(--transition-speed);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 .campo input:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
+    box-shadow: 0 0 0 4px rgba(211, 47, 47, 0.15), 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .campo input::placeholder {
@@ -432,29 +495,30 @@ body.dark .barra-progreso.fase-rojo     { background: linear-gradient(90deg, #b7
     gap: 16px;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 15px;  /* Reducido de 30px a 15px */
+    margin-top: 15px;
+    /* Reducido de 30px a 15px */
 }
 
 .btn-action {
-    font-size: 16px;  /* Reducido de 18px a 16px */
+    font-size: 16px;
     font-weight: 600;
-    padding: 12px 24px;  /* Reducido padding */
-    border: none;
-    border-radius: var(--border-radius);
-    background: #333;
+    padding: 12px 24px;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #333 0%, #1a1a1a 100%);
     color: #fff;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 8px;  /* Reducido de 10px a 8px */
+    gap: 8px;
     transition: all var(--transition-speed);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .btn-action:hover {
-    background: #000;
+    background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .btn-action:active {
@@ -466,33 +530,37 @@ body.dark .barra-progreso.fase-rojo     { background: linear-gradient(90deg, #b7
 }
 
 .btn-secondary {
-    background: #666;
+    background: transparent;
+    border: 2px solid #888;
+    color: #555;
 }
 
 .btn-secondary:hover {
-    background: #444;
+    background: rgba(211, 47, 47, 0.08);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
 }
 
 /* =========================
    MODO OSCURO
 ========================= */
 body.dark {
-    background: var(--color-bg-dark);
-    color: #FFE600; /* Amarillo para texto general y labels */
+    background: radial-gradient(ellipse at top, #1a1c2e 0%, #0d0e14 100%);
+    color: #FDD835;
 }
 
 body.dark header {
     background: var(--color-surface-dark);
-    border-bottom-color: #444;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    border-image: linear-gradient(90deg, transparent, #ff4444, transparent) 1;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
-/* Inputs: fondo negro, texto blanco, sin borde visible */
+/* Inputs: fondo negro, texto blanco, borde sutil */
 body.dark input,
 body.dark input[type="time"] {
     background: #000000;
     color: #ffffff;
-    border-color: #000000;
+    border-color: #333;
 }
 
 body.dark input::placeholder {
@@ -506,24 +574,26 @@ body.dark .barra-container {
 
 body.dark #contador {
     background: #000;
-    color: var(--color-timer-dark); /* cian — ya contrasta bien */
-    box-shadow: 0 4px 12px rgba(0,255,204,0.2);
+    color: var(--color-timer-dark);
+    /* cian — ya contrasta bien */
+    box-shadow: 0 4px 12px rgba(0, 255, 204, 0.2);
 }
 
-/* Labels de campos en amarillo */
+/* Labels de campos en dorado */
 body.dark .campo label {
-    color: #FFE600;
+    color: #FDD835;
 }
 
-/* Labels del header en amarillo */
+/* Labels del header en dorado */
 body.dark .hora-input label,
 body.dark .label-restante {
-    color: #FFE600;
+    color: #FDD835;
 }
 
-/* Hora actual en amarillo */
+/* Hora actual en dorado con glow */
 body.dark #horaActual {
-    color: #FFE600;
+    color: #FDD835;
+    text-shadow: 0 0 40px rgba(253, 216, 53, 0.3), 0 0 80px rgba(253, 216, 53, 0.1);
 }
 
 /* =========================
@@ -533,65 +603,66 @@ body.dark #horaActual {
 /* Para pantallas grandes (proyectores, TVs) */
 @media (min-width: 1600px) {
     .config {
-        gap: 50px;  /* Reducido de 80px a 50px para evitar desbordamiento */
+        gap: 50px;
+        /* Reducido de 80px a 50px para evitar desbordamiento */
     }
-    
+
     .hora-input label,
     .label-restante {
         font-size: 38px;
     }
-    
+
     .hora-input input[type="time"] {
         font-size: 36px;
         padding: 14px 22px;
         width: 280px;
     }
-    
+
     .hora-input input[type="time"]::-webkit-calendar-picker-indicator {
         font-size: 28px;
     }
-    
+
     #contador {
         font-size: 42px;
         padding: 18px 32px;
         min-width: 220px;
     }
-    
+
     #horaActual {
         font-size: clamp(140px, 15vw, 220px);
     }
-    
+
     .barra-container {
         height: 40px;
         margin-bottom: 50px;
         width: calc(100% - 100px);
     }
-    
+
     .campo label {
         font-size: 42px;
     }
-    
+
     .campo-horario label,
     .campo-evaluacion label,
     .campo-clave label,
     .campo-fecha label {
         font-size: 42px;
     }
-    
+
     .campo-horario input {
         max-width: unset;
     }
-    
+
     .campo input {
         height: 80px;
         font-size: 38px;
         padding: 14px 22px;
     }
-    
+
     .info {
         padding: 0 50px 30px 50px;
     }
-    
+
     .btn-action {
         font-size: 20px;
         padding: 18px 32px;
@@ -603,67 +674,69 @@ body.dark #horaActual {
     header {
         padding: 30px 60px;
     }
-    
+
     .config {
-        gap: 80px;  /* Reducido de 100px a 80px */
+        gap: 80px;
+        /* Reducido de 100px a 80px */
     }
-    
+
     .hora-input label,
     .label-restante {
         font-size: 46px;
     }
-    
+
     .hora-input input[type="time"] {
         font-size: 42px;
         padding: 18px 26px;
         width: 330px;
     }
-    
+
     .hora-input input[type="time"]::-webkit-calendar-picker-indicator {
         font-size: 34px;
     }
-    
+
     #contador {
         font-size: 52px;
         padding: 22px 40px;
         min-width: 280px;
     }
-    
+
     #horaActual {
         font-size: clamp(180px, 16vw, 280px);
     }
-    
+
     .barra-container {
         height: 50px;
         width: calc(100% - 120px);
         max-width: 1700px;
     }
-    
+
     .campo label {
         font-size: 50px;
     }
-    
+
     .campo-horario label,
     .campo-evaluacion label,
     .campo-clave label,
     .campo-fecha label {
         font-size: 50px;
     }
-    
+
     .campo-horario input {
         max-width: unset;
     }
-    
+
     .campo input {
         height: 90px;
         font-size: 44px;
     }
-    
+
     .info {
-        padding: 0 60px 40px 60px;  /* Reducido de 80px a 60px */
+        padding: 0 60px 40px 60px;
+        /* Reducido de 80px a 60px */
         gap: 32px;
     }
-    
+
     .btn-action {
         font-size: 24px;
         padding: 22px 40px;
@@ -677,31 +750,31 @@ body.dark #horaActual {
         gap: 30px;
         text-align: center;
     }
-    
+
     .tiempo-restante {
         justify-self: center;
     }
-    
+
     .fila-1,
     .fila-2,
     .fila-3 {
         grid-template-columns: 1fr;
         gap: 20px;
     }
-    
+
     .info {
         padding: 0 30px 30px 30px;
     }
-    
+
     .campo {
         grid-template-columns: auto 1fr;
         gap: 10px;
     }
-    
+
     .campo label {
         font-size: 22px;
     }
-    
+
     .campo input {
         width: 100%;
     }
@@ -712,49 +785,49 @@ body.dark #horaActual {
     header {
         padding: 16px 20px;
     }
-    
+
     .config {
         gap: 20px;
     }
-    
+
     .hora-input label,
     .label-restante {
         font-size: 18px;
     }
-    
+
     .hora-input input[type="time"] {
         font-size: 18px;
         width: 150px;
     }
-    
+
     #contador {
         font-size: 24px;
         min-width: 150px;
         padding: 12px 16px;
     }
-    
+
     #horaActual {
         font-size: clamp(60px, 15vw, 100px);
     }
-    
+
     .campo label {
         font-size: 18px;
     }
-    
+
     .campo input {
         font-size: 16px;
         height: 48px;
     }
-    
+
     .btn-action {
         font-size: 16px;
         padding: 12px 20px;
     }
-    
+
     .acciones {
         width: 100%;
     }
-    
+
     .btn-action {
         flex: 1;
         min-width: 140px;
@@ -793,18 +866,28 @@ body.dark #horaActual {
 
 /* Animación para cuando el tiempo se está acabando */
 @keyframes blink-red {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.6;
+    }
 }
 
 /* Estado de espera: aún no ha comenzado la evaluación */
 @keyframes pulse-espera {
-    0%, 100% {
-        box-shadow: 0 0 0 0px rgba(211,47,47,0);
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0px rgba(211, 47, 47, 0);
         background: #1a0000;
     }
+
     50% {
-        box-shadow: 0 0 0 6px rgba(211,47,47,0.25);
+        box-shadow: 0 0 0 6px rgba(211, 47, 47, 0.25);
         background: #2d0000;
     }
 }
@@ -872,8 +955,13 @@ body.dark #contador.tiempo-critico {
 }
 
 @keyframes fadeInOverlay {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .modal-fin-contenido {
@@ -884,7 +972,7 @@ body.dark #contador.tiempo-critico {
     max-width: 700px;
     width: 90%;
     border: 3px solid #cc0000;
-    box-shadow: 0 0 0 4px rgba(204, 0, 0, 0.2), 0 24px 80px rgba(0,0,0,0.4), 0 0 40px rgba(204, 0, 0, 0.15);
+    box-shadow: 0 0 0 4px rgba(204, 0, 0, 0.2), 0 24px 80px rgba(0, 0, 0, 0.4), 0 0 40px rgba(204, 0, 0, 0.15);
     animation: slideInModal 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     display: flex;
     flex-direction: column;
@@ -893,8 +981,15 @@ body.dark #contador.tiempo-critico {
 }
 
 @keyframes slideInModal {
-    from { transform: scale(0.7); opacity: 0; }
-    to   { transform: scale(1);   opacity: 1; }
+    from {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .modal-fin-icono {
@@ -931,13 +1026,13 @@ body.dark #contador.tiempo-critico {
     color: #fff;
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 4px 12px rgba(211,47,47,0.3);
+    box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
 }
 
 .modal-fin-btn:hover {
     background: var(--color-primary-dark);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(211,47,47,0.4);
+    box-shadow: 0 6px 20px rgba(211, 47, 47, 0.4);
 }
 
 /* Modo oscuro: modal con borde brillante y alto contraste */
@@ -973,13 +1068,13 @@ body.dark .modal-fin-icono {
     letter-spacing: 4px;
     font-family: "Courier New", "SF Mono", "Monaco", monospace;
     font-variant-numeric: tabular-nums;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 body.dark #contadorSolo {
     background: #000;
     color: var(--color-timer-dark);
-    box-shadow: 0 4px 12px rgba(0,255,204,0.2);
+    box-shadow: 0 4px 12px rgba(0, 255, 204, 0.2);
 }
 
 /* En modo solo reloj: ocultar header, campos y botones */
@@ -1036,18 +1131,19 @@ body.solo-reloj .contador-solo-reloj {
     background: rgba(80, 80, 80, 0.5);
     color: #fff;
     cursor: pointer;
-    display: none;              /* oculto por defecto */
+    display: none;
+    /* oculto por defecto */
     align-items: center;
     gap: 8px;
     backdrop-filter: blur(6px);
     transition: all 0.2s ease;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
 }
 
 .btn-salir-solo:hover {
     background: rgba(211, 47, 47, 0.85);
     transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(211,47,47,0.3);
+    box-shadow: 0 4px 16px rgba(211, 47, 47, 0.3);
 }
 
 /* Mostrar botón flotante solo en modo solo reloj */
@@ -1062,4 +1158,174 @@ body.dark.solo-reloj .btn-salir-solo {
 
 body.dark.solo-reloj .btn-salir-solo:hover {
     background: rgba(211, 47, 47, 0.85);
+}
+
+/* =========================
+   TOAST NOTIFICATIONS
+========================= */
+.toast-notification {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-120%);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(12px);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.toast-notification.toast-visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.toast-icon {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.toast-success {
+    background: rgba(46, 125, 50, 0.95);
+    color: #fff;
+    border: 1px solid rgba(102, 187, 106, 0.3);
+}
+
+.toast-warning {
+    background: rgba(245, 127, 23, 0.95);
+    color: #fff;
+    border: 1px solid rgba(255, 202, 40, 0.3);
+}
+
+.toast-info {
+    background: rgba(25, 118, 210, 0.95);
+    color: #fff;
+    border: 1px solid rgba(66, 165, 245, 0.3);
+}
+
+.toast-error {
+    background: rgba(211, 47, 47, 0.95);
+    color: #fff;
+    border: 1px solid rgba(239, 83, 80, 0.3);
+}
+
+body.dark .toast-success {
+    background: rgba(46, 125, 50, 0.9);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(46, 125, 50, 0.2);
+}
+
+body.dark .toast-warning {
+    background: rgba(245, 127, 23, 0.9);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(245, 127, 23, 0.2);
+}
+
+/* =========================
+   CUSTOM CONFIRM MODAL
+========================= */
+.confirm-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.confirm-overlay.confirm-visible {
+    opacity: 1;
+}
+
+.confirm-box {
+    background: #fff;
+    border-radius: 16px;
+    padding: 40px 48px;
+    max-width: 480px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
+    transform: scale(0.85);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.confirm-visible .confirm-box {
+    transform: scale(1);
+}
+
+.confirm-msg {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    line-height: 1.5;
+    margin: 0 0 28px 0;
+}
+
+.confirm-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.confirm-btn {
+    font-size: 15px;
+    font-weight: 600;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.confirm-cancel {
+    background: #f0f0f0;
+    color: #555;
+}
+
+.confirm-cancel:hover {
+    background: #e0e0e0;
+}
+
+.confirm-accept {
+    background: var(--color-primary);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
+}
+
+.confirm-accept:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(211, 47, 47, 0.4);
+}
+
+/* Dark mode confirm */
+body.dark .confirm-box {
+    background: #1e1e1e;
+    border: 1px solid #333;
+}
+
+body.dark .confirm-msg {
+    color: #f0f0f0;
+}
+
+body.dark .confirm-cancel {
+    background: #333;
+    color: #ccc;
+}
+
+body.dark .confirm-cancel:hover {
+    background: #444;
 }

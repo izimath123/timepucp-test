@@ -8,6 +8,7 @@ const contadorEl = document.getElementById("contador");
 const contadorSoloEl = document.getElementById("contadorSolo");
 const barraEl = document.getElementById("barraProgreso");
 const barraContainer = document.querySelector(".barra-container");
+const barraPorcentajeEl = document.getElementById("barraPorcentaje");
 
 // Elementos de información
 const cursoInput = document.getElementById("curso");
@@ -34,6 +35,7 @@ let intervaloCuenta;
 let tiempoTotal = 0;
 let ultimoTiempoRestante = 0;
 let alertaSonora = null;
+let toastTimeout = null;
 
 // =========================
 // INICIALIZACIÓN
@@ -56,7 +58,7 @@ function establecerFechaActual() {
         const dia = String(hoy.getDate()).padStart(2, '0');
         const mes = String(hoy.getMonth() + 1).padStart(2, '0');
         const anio = hoy.getFullYear();
-        
+
         fechaTexto.value = `${dia}/${mes}/${anio}`;
         fechaInput.value = `${anio}-${mes}-${dia}`;
     }
@@ -109,7 +111,7 @@ function iniciarCuentaRegresiva() {
             const hD = Math.floor(durTotal / 3600000);
             const mD = Math.floor((durTotal % 3600000) / 60000);
             const sD = Math.floor((durTotal % 60000) / 1000);
-            const durStr = `${String(hD).padStart(2,"0")}:${String(mD).padStart(2,"0")}:${String(sD).padStart(2,"0")}`;
+            const durStr = `${String(hD).padStart(2, "0")}:${String(mD).padStart(2, "0")}:${String(sD).padStart(2, "0")}`;
 
             contadorEl.textContent = durStr;
             contadorSoloEl.textContent = durStr;
@@ -174,8 +176,11 @@ function iniciarCuentaRegresiva() {
 
         // Actualizar barra de progreso
         const progreso = Math.min(((tiempoTotal - restante) / tiempoTotal) * 100, 100);
+        const progresoRedondeado = Math.round(progreso);
         barraEl.style.width = `${progreso.toFixed(2)}%`;
-        barraContainer.setAttribute("aria-valuenow", Math.round(progreso));
+        barraContainer.setAttribute("aria-valuenow", progresoRedondeado);
+        barraContainer.setAttribute("aria-valuetext", `${progresoRedondeado}% completado`);
+        barraPorcentajeEl.textContent = `${progresoRedondeado}%`;
         actualizarColorBarra(progreso);
 
         ultimoTiempoRestante = restante;
@@ -198,6 +203,15 @@ function actualizarColorBarra(progreso) {
         barraEl.classList.add('fase-naranja');
     } else {
         barraEl.classList.add('fase-rojo');
+    }
+
+    // Change percentage text color when bar covers it
+    if (progreso > 70) {
+        barraPorcentajeEl.style.color = '#fff';
+        barraPorcentajeEl.style.textShadow = '0 1px 3px rgba(0,0,0,0.5)';
+    } else {
+        barraPorcentajeEl.style.color = '';
+        barraPorcentajeEl.style.textShadow = '';
     }
 }
 
@@ -254,7 +268,7 @@ document.addEventListener("fullscreenchange", () => {
 // =========================
 function aplicarModoOscuro() {
     const modoOscuro = localStorage.getItem("darkMode") === "true";
-    
+
     if (modoOscuro) {
         document.body.classList.add("dark");
         btnDarkMode.innerHTML = '<span class="icon">☀️</span><span class="text">Modo claro</span>';
@@ -268,7 +282,7 @@ btnDarkMode.addEventListener("click", () => {
     document.body.classList.toggle("dark");
     const isDark = document.body.classList.contains("dark");
     localStorage.setItem("darkMode", isDark);
-    
+
     btnDarkMode.innerHTML = isDark
         ? '<span class="icon">☀️</span><span class="text">Modo claro</span>'
         : '<span class="icon">🌙</span><span class="text">Modo oscuro</span>';
@@ -335,7 +349,7 @@ function reproducirAlerta() {
                 tocarAcorde([523.25, 659.25, 783.99], 0.0);
                 tocarAcorde([493.88, 622.25, 739.99], 0.55);
                 tocarAcorde([440.00, 554.37, 659.25], 1.1);
-            } catch(e) {}
+            } catch (e) { }
         }, 2400);
 
     } catch (e) {
@@ -355,7 +369,7 @@ modalFin.addEventListener("click", (e) => {
 // BOTÓN RESET
 // =========================
 btnReset.addEventListener("click", () => {
-    if (confirm("¿Estás seguro de que deseas reiniciar el temporizador y limpiar todos los datos?")) {
+    mostrarConfirm("¿Estás seguro de que deseas reiniciar el temporizador y limpiar todos los datos?", () => {
         // Limpiar inputs
         horaInicioInput.value = "";
         horaFinInput.value = "";
@@ -368,20 +382,23 @@ btnReset.addEventListener("click", () => {
         claveCursoInput.value = "";
         fechaInput.value = "";
         fechaTexto.value = "";
-        
+
         // Reiniciar contador
         clearInterval(intervaloCuenta);
         contadorEl.textContent = "00:00:00";
         contadorSoloEl.textContent = "00:00:00";
         barraEl.style.width = "0%";
         barraContainer.setAttribute("aria-valuenow", "0");
+        barraPorcentajeEl.textContent = "0%";
+        barraPorcentajeEl.style.color = '';
+        barraPorcentajeEl.style.textShadow = '';
         contadorEl.classList.remove("warning", "tiempo-critico");
-        
+
         // Limpiar localStorage
         localStorage.removeItem("timepucp_data");
-        
-        alert("Datos reiniciados correctamente");
-    }
+
+        mostrarToast("Datos reiniciados correctamente", "success");
+    });
 });
 
 // =========================
@@ -399,7 +416,7 @@ function guardarDatos() {
         fecha: fechaInput.value,
         fechaTexto: fechaTexto.value
     };
-    
+
     localStorage.setItem("timepucp_data", JSON.stringify(datos));
 }
 
@@ -445,17 +462,11 @@ document.addEventListener("keydown", (e) => {
         e.preventDefault();
         btnFullscreen.click();
     }
-    
+
     // Ctrl/Cmd + D para modo oscuro
     if ((e.ctrlKey || e.metaKey) && e.key === "d") {
         e.preventDefault();
         btnDarkMode.click();
-    }
-    
-    // Ctrl/Cmd + R para reset (con confirmación)
-    if ((e.ctrlKey || e.metaKey) && e.key === "r") {
-        e.preventDefault();
-        btnReset.click();
     }
 
     // Escape para salir del modo solo reloj o cerrar modal
@@ -476,7 +487,7 @@ function anunciarCambio(mensaje) {
     anuncio.className = "sr-only";
     anuncio.textContent = mensaje;
     document.body.appendChild(anuncio);
-    
+
     setTimeout(() => {
         document.body.removeChild(anuncio);
     }, 1000);
@@ -488,13 +499,13 @@ function anunciarCambio(mensaje) {
 // Validar que la hora de fin sea posterior a la de inicio
 function validarHoras() {
     if (!horaInicioInput.value || !horaFinInput.value) return true;
-    
+
     const [hIni, mIni] = horaInicioInput.value.split(":").map(Number);
     const [hFin, mFin] = horaFinInput.value.split(":").map(Number);
-    
+
     const minutosInicio = hIni * 60 + mIni;
     const minutosFin = hFin * 60 + mFin;
-    
+
     // Permitir cruce de medianoche si la diferencia es razonable (< 12 horas hacia atrás)
     if (minutosFin < minutosInicio) {
         const diferencia = (1440 - minutosInicio) + minutosFin; // 1440 = minutos en un día
@@ -502,16 +513,82 @@ function validarHoras() {
             return false;
         }
     }
-    
+
     return true;
 }
 
 // Agregar validación al cambiar horas
 horaFinInput.addEventListener("change", () => {
     if (!validarHoras()) {
-        alert("Advertencia: Verifica que las horas sean correctas. La hora de fin parece estar muy lejos de la hora de inicio.");
+        mostrarToast("Advertencia: Verifica que las horas sean correctas. La hora de fin parece estar muy lejos de la hora de inicio.", "warning");
     }
 });
+
+// =========================
+// SISTEMA DE TOASTS
+// =========================
+function mostrarToast(mensaje, tipo = "info") {
+    // Eliminar toast existente
+    const existente = document.querySelector(".toast-notification");
+    if (existente) existente.remove();
+    clearTimeout(toastTimeout);
+
+    const toast = document.createElement("div");
+    toast.className = `toast-notification toast-${tipo}`;
+
+    const iconos = { success: "✓", warning: "⚠", info: "ℹ", error: "✕" };
+    toast.innerHTML = `<span class="toast-icon">${iconos[tipo] || iconos.info}</span><span class="toast-msg">${mensaje}</span>`;
+
+    document.body.appendChild(toast);
+
+    // Trigger animation
+    requestAnimationFrame(() => toast.classList.add("toast-visible"));
+
+    toastTimeout = setTimeout(() => {
+        toast.classList.remove("toast-visible");
+        toast.addEventListener("transitionend", () => toast.remove());
+    }, 4000);
+}
+
+function mostrarConfirm(mensaje, onConfirm) {
+    // Eliminar confirm existente
+    const existente = document.querySelector(".confirm-overlay");
+    if (existente) existente.remove();
+
+    const overlay = document.createElement("div");
+    overlay.className = "confirm-overlay";
+    overlay.innerHTML = `
+        <div class="confirm-box">
+            <p class="confirm-msg">${mensaje}</p>
+            <div class="confirm-actions">
+                <button class="confirm-btn confirm-cancel">Cancelar</button>
+                <button class="confirm-btn confirm-accept">Confirmar</button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+    requestAnimationFrame(() => overlay.classList.add("confirm-visible"));
+
+    overlay.querySelector(".confirm-cancel").addEventListener("click", () => {
+        overlay.classList.remove("confirm-visible");
+        overlay.addEventListener("transitionend", () => overlay.remove());
+    });
+
+    overlay.querySelector(".confirm-accept").addEventListener("click", () => {
+        overlay.classList.remove("confirm-visible");
+        overlay.addEventListener("transitionend", () => overlay.remove());
+        onConfirm();
+    });
+
+    // Click outside to cancel
+    overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) {
+            overlay.classList.remove("confirm-visible");
+            overlay.addEventListener("transitionend", () => overlay.remove());
+        }
+    });
+}
 
 // =========================
 // INFORMACIÓN DEL SISTEMA
@@ -520,4 +597,3 @@ console.log("⏰ TIMEPUCP - Sistema de temporizador iniciado");
 console.log("Atajos de teclado:");
 console.log("  F11: Pantalla completa");
 console.log("  Ctrl/Cmd + D: Modo oscuro");
-console.log("  Ctrl/Cmd + R: Reiniciar");
