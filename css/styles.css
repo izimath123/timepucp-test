@@ -822,12 +822,19 @@ body.dark #contadorSolo.en-espera {
 
 .tiempo-critico {
     animation: blink-red 1s infinite;
-    color: var(--color-primary) !important;
+    color: #ffffff !important;
+    background: #cc0000 !important;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 100, 100, 0.6) !important;
+    box-shadow: 0 0 0 4px #ff3333, 0 0 30px rgba(255, 0, 0, 0.5) !important;
 }
 
-/* En modo oscuro el crítico también parpadea en rojo */
-body.dark #contadorSolo.tiempo-critico {
-    color: #ff4444 !important;
+/* En modo oscuro el crítico: glow más intenso */
+body.dark #contadorSolo.tiempo-critico,
+body.dark #contador.tiempo-critico {
+    color: #ffffff !important;
+    background: #cc0000 !important;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 100, 100, 0.6) !important;
+    box-shadow: 0 0 0 4px #ff3333, 0 0 30px rgba(255, 0, 0, 0.7) !important;
 }
 
 /* Transición suave para cambios de tema */
@@ -931,14 +938,20 @@ body.dark #contadorSolo.tiempo-critico {
     box-shadow: 0 6px 20px rgba(211,47,47,0.4);
 }
 
-/* Modo oscuro */
+/* Modo oscuro: modal con borde brillante y alto contraste */
 body.dark .modal-fin-contenido {
-    background: #1e1e1e;
-    border: 1px solid #444;
+    background: #1a1a1a;
+    border: 3px solid #ff3333;
+    box-shadow: 0 0 0 4px rgba(255, 50, 50, 0.3), 0 24px 80px rgba(255, 0, 0, 0.4), 0 0 60px rgba(255, 0, 0, 0.2);
 }
 
-body.dark .modal-fin-mensaje {
+body.dark .modal-fin-titulo {
     color: #FFE600;
+    text-shadow: 0 0 20px rgba(255, 230, 0, 0.7);
+}
+
+body.dark .modal-fin-icono {
+    filter: drop-shadow(0 0 12px rgba(255, 230, 0, 0.8));
 }
 
 /* Contenedor del contador solo — oculto por defecto */
