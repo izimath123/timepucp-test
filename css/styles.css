@@ -1061,9 +1061,9 @@ body.dark .modal-fin-icono {
 #contadorSolo {
     background: var(--color-timer-bg);
     color: var(--color-timer-text);
-    padding: 20px 48px;
+    padding: 16px 36px;
     border-radius: var(--border-radius);
-    font-size: clamp(50px, 6vw, 90px);
+    font-size: clamp(36px, 4.5vw, 64px);
     font-weight: 700;
     letter-spacing: 4px;
     font-family: "Courier New", "SF Mono", "Monaco", monospace;
@@ -1087,7 +1087,7 @@ body.solo-reloj main {
     justify-content: center;
     align-items: center;
     gap: 0;
-    padding: 0 40px 10vh 40px;
+    padding: 0 40px 14vh 40px;
     overflow: hidden;
 }
 
