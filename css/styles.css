@@ -1087,7 +1087,7 @@ body.solo-reloj main {
     justify-content: center;
     align-items: center;
     gap: 0;
-    padding: 0 40px;
+    padding: 0 40px 10vh 40px;
     overflow: hidden;
 }
 
@@ -1109,7 +1109,7 @@ body.solo-reloj #horaActual {
 body.solo-reloj .barra-container {
     width: calc(100% - 80px);
     height: 36px;
-    margin: 0 auto 0 auto;
+    margin: 0 auto 20px auto;
 }
 
 /* Mostrar el contador solo en modo solo reloj */
