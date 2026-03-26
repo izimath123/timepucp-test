@@ -220,12 +220,12 @@ function actualizarColorBarra(progreso) {
 // =========================
 function actualizarHoraActual() {
     const ahora = new Date();
-    horaActualEl.textContent = ahora.toLocaleTimeString("es-PE", {
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: true
-    }).toUpperCase();
+    const horas = ahora.getHours();
+    const minutos = String(ahora.getMinutes()).padStart(2, "0");
+    const segundos = String(ahora.getSeconds()).padStart(2, "0");
+    const ampm = horas >= 12 ? "PM" : "AM";
+    const horas12 = String(horas % 12 || 12).padStart(2, "0");
+    horaActualEl.textContent = `${horas12}:${minutos}:${segundos} ${ampm}`;
 }
 
 // =========================
