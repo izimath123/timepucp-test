@@ -743,6 +743,31 @@ body.dark #horaActual {
     }
 }
 
+/* =========================
+   PROYECTORES 4:3 Y ZOOM ALTO
+   Rango: 1200px-1500px
+   Mantiene las 3 columnas del header pero centra el contenido
+   de "Tiempo Restante" dentro de su columna para verse balanceado
+========================= */
+@media (min-width: 1201px) and (max-width: 1500px) {
+    .tiempo-restante {
+        justify-self: center;
+        justify-content: center;
+    }
+}
+
+/* =========================
+   ASPECT RATIO 4:3 (Proyectores típicos)
+   Centra "Tiempo Restante" en pantallas con proporción 4:3
+   manteniendo el layout de 3 columnas
+========================= */
+@media (max-aspect-ratio: 4/3) and (min-width: 1201px) {
+    .tiempo-restante {
+        justify-self: center;
+        justify-content: center;
+    }
+}
+
 /* Para tablets y pantallas medianas */
 @media (max-width: 1200px) {
     .config {
