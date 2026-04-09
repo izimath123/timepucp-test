@@ -190,7 +190,7 @@ header {
    el recuadro del contador quepa a su derecha sin desbordarse. */
 @media (max-width: 1250px) {
     .tiempo-restante {
-        gap: 20px;
+        gap: 24px;
     }
 
     .label-restante {
