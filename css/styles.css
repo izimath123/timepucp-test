@@ -201,6 +201,16 @@ header {
     }
 }
 
+/* A 150% sobre 1080p (~1280px lógicos) ocultamos el label "Tiempo Restante"
+   para que el recuadro del contador quepa horizontalmente. El contexto
+   visual del recuadro negro junto a los inputs de hora ya deja implícito
+   que es el tiempo restante. */
+@media (max-width: 1100px) {
+    .label-restante {
+        display: none;
+    }
+}
+
 #contador {
     background: var(--color-timer-bg);
     color: var(--color-timer-text);
