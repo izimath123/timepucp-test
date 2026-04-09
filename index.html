@@ -4,7 +4,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- =====================
+         SEO BÁSICO
+    ===================== -->
     <title>TIMEPUCP - Temporizador de Exámenes</title>
+    <meta name="description" content="Temporizador para exámenes y evaluaciones universitarias. Reloj en tiempo real, cuenta regresiva, barra de progreso, modo oscuro y pantalla completa. Ideal para aulas PUCP.">
+    <meta name="keywords" content="temporizador exámenes, cronómetro evaluaciones, timer universitario, temporizador PUCP, control de tiempo examen, reloj examen online, cuenta regresiva evaluación">
+    <meta name="author" content="TIMEPUCP">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://timepucp.site/">
+
+    <!-- =====================
+         OPEN GRAPH (Facebook, WhatsApp, LinkedIn)
+    ===================== -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://timepucp.site/">
+    <meta property="og:title" content="TIMEPUCP - Temporizador de Exámenes">
+    <meta property="og:description" content="Temporizador gratuito para exámenes y evaluaciones universitarias. Reloj en tiempo real, cuenta regresiva, barra de progreso, modo oscuro y pantalla completa.">
+    <meta property="og:image" content="https://timepucp.site/web-app-manifest-512x512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:locale" content="es_PE">
+    <meta property="og:site_name" content="TIMEPUCP">
+
+    <!-- =====================
+         TWITTER CARD
+    ===================== -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:url" content="https://timepucp.site/">
+    <meta name="twitter:title" content="TIMEPUCP - Temporizador de Exámenes">
+    <meta name="twitter:description" content="Temporizador gratuito para exámenes y evaluaciones universitarias. Reloj en tiempo real, cuenta regresiva y barra de progreso.">
+    <meta name="twitter:image" content="https://timepucp.site/web-app-manifest-512x512.png">
+
+    <!-- =====================
+         STRUCTURED DATA (JSON-LD)
+    ===================== -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "TIMEPUCP",
+      "url": "https://timepucp.site/",
+      "description": "Temporizador gratuito para exámenes y evaluaciones universitarias con reloj en tiempo real, cuenta regresiva, barra de progreso y modo oscuro.",
+      "applicationCategory": "EducationApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "PEN"
+      },
+      "inLanguage": "es",
+      "author": {
+        "@type": "Organization",
+        "name": "TIMEPUCP"
+      }
+    }
+    </script>
 
     <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -25,14 +81,14 @@
     <header>
         <div class="config">
             <div class="hora-input">
-                <label for="horaInicio">Hora Inicio</label>
+                <label for="horaInicio">Inicio</label>
                 <div class="time-wrapper">
                     <input type="time" id="horaInicio" aria-label="Hora de inicio del examen">
                 </div>
             </div>
 
             <div class="hora-input">
-                <label for="horaFin">Hora Fin</label>
+                <label for="horaFin">Fin</label>
                 <div class="time-wrapper">
                     <input type="time" id="horaFin" aria-label="Hora de fin del examen">
                 </div>

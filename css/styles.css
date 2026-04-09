@@ -51,7 +51,7 @@ body {
 ========================= */
 header {
     background: var(--color-surface-light);
-    padding: 12px 40px;
+    padding: 12px 20px;
     border-bottom: 3px solid transparent;
     border-image: linear-gradient(90deg, transparent, var(--color-primary), transparent) 1;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
@@ -62,7 +62,7 @@ header {
     display: grid;
     grid-template-columns: auto auto 1fr;
     align-items: center;
-    gap: 40px;
+    gap: 20px;
     max-width: 1920px;
     margin: 0 auto;
     width: 100%;
@@ -75,7 +75,7 @@ header {
 .hora-input {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 10px;
 }
 
 .hora-input label {
@@ -175,15 +175,30 @@ header {
 .tiempo-restante {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 10px;
     justify-self: end;
-    flex-wrap: wrap;
 }
 
 .label-restante {
     font-size: 30px;
     font-weight: 700;
     white-space: nowrap;
+}
+
+/* En anchos ajustados (proyectores a 110%/125%, pantallas chicas)
+   permitir que "Tiempo Restante" se rompa en dos líneas para que
+   el recuadro del contador quepa a su derecha sin desbordarse. */
+@media (max-width: 1250px) {
+    .tiempo-restante {
+        gap: 20px;
+    }
+
+    .label-restante {
+        white-space: normal;
+        line-height: 1.05;
+        max-width: 6ch;
+        text-align: right;
+    }
 }
 
 #contador {
@@ -603,8 +618,7 @@ body.dark #horaActual {
 /* Para pantallas grandes (proyectores, TVs) */
 @media (min-width: 1600px) {
     .config {
-        gap: 50px;
-        /* Reducido de 80px a 50px para evitar desbordamiento */
+        gap: 30px;
     }
 
     .hora-input label,
@@ -672,12 +686,11 @@ body.dark #horaActual {
 /* Para pantallas muy grandes (4K, auditorios) */
 @media (min-width: 2400px) {
     header {
-        padding: 30px 60px;
+        padding: 30px 40px;
     }
 
     .config {
-        gap: 80px;
-        /* Reducido de 100px a 80px */
+        gap: 50px;
     }
 
     .hora-input label,
@@ -743,33 +756,8 @@ body.dark #horaActual {
     }
 }
 
-/* =========================
-   PROYECTORES 4:3 Y ZOOM ALTO
-   Rango: 1200px-1500px
-   Mantiene las 3 columnas del header pero centra el contenido
-   de "Tiempo Restante" dentro de su columna para verse balanceado
-========================= */
-@media (min-width: 1201px) and (max-width: 1500px) {
-    .tiempo-restante {
-        justify-self: center;
-        justify-content: center;
-    }
-}
-
-/* =========================
-   ASPECT RATIO 4:3 (Proyectores típicos)
-   Centra "Tiempo Restante" en pantallas con proporción 4:3
-   manteniendo el layout de 3 columnas
-========================= */
-@media (max-aspect-ratio: 4/3) and (min-width: 1201px) {
-    .tiempo-restante {
-        justify-self: center;
-        justify-content: center;
-    }
-}
-
 /* Para tablets y pantallas medianas */
-@media (max-width: 1200px) {
+@media (max-width: 900px) {
     .config {
         grid-template-columns: 1fr;
         gap: 30px;
