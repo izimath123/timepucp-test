@@ -204,15 +204,6 @@ function actualizarColorBarra(progreso) {
     } else {
         barraEl.classList.add('fase-rojo');
     }
-
-    // Change percentage text color when bar covers it
-    if (progreso > 70) {
-        barraPorcentajeEl.style.color = '#fff';
-        barraPorcentajeEl.style.textShadow = '0 1px 3px rgba(0,0,0,0.5)';
-    } else {
-        barraPorcentajeEl.style.color = '';
-        barraPorcentajeEl.style.textShadow = '';
-    }
 }
 
 // =========================

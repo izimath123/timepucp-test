@@ -190,7 +190,7 @@ header {
    el recuadro del contador quepa a su derecha sin desbordarse. */
 @media (max-width: 1250px) {
     .tiempo-restante {
-        gap: 36px;
+        gap: 18px;
     }
 
     .label-restante {
@@ -318,19 +318,15 @@ main {
     font-size: 14px;
     font-weight: 800;
     font-family: 'Inter', sans-serif;
-    color: #555;
+    color: #000;
     z-index: 2;
     pointer-events: none;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
     letter-spacing: 0.03em;
     transition: color var(--transition-speed);
 }
 
 /* When bar is past 70%, text should be white to contrast with colored bar */
-body.dark .barra-porcentaje {
-    color: #aaa;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-}
+
 
 .barra-progreso {
     height: 100%;
@@ -363,21 +359,7 @@ body.dark .barra-porcentaje {
 }
 
 /* Dark mode: colores más vibrantes */
-body.dark .barra-progreso.fase-verde {
-    background: linear-gradient(90deg, #1b5e20, #00e676);
-}
 
-body.dark .barra-progreso.fase-amarillo {
-    background: linear-gradient(90deg, #f57f17, #FFE600);
-}
-
-body.dark .barra-progreso.fase-naranja {
-    background: linear-gradient(90deg, #e65100, #ffab40);
-}
-
-body.dark .barra-progreso.fase-rojo {
-    background: linear-gradient(90deg, #b71c1c, #ff1744);
-}
 
 .barra-progreso::after {
     content: '';
@@ -564,61 +546,6 @@ body.dark .barra-progreso.fase-rojo {
     background: rgba(211, 47, 47, 0.08);
     border-color: var(--color-primary);
     color: var(--color-primary);
-}
-
-/* =========================
-   MODO OSCURO
-========================= */
-body.dark {
-    background: radial-gradient(ellipse at top, #1a1c2e 0%, #0d0e14 100%);
-    color: #FDD835;
-}
-
-body.dark header {
-    background: var(--color-surface-dark);
-    border-image: linear-gradient(90deg, transparent, #ff4444, transparent) 1;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-}
-
-/* Inputs: fondo negro, texto blanco, borde sutil */
-body.dark input,
-body.dark input[type="time"] {
-    background: #000000;
-    color: #ffffff;
-    border-color: #333;
-}
-
-body.dark input::placeholder {
-    color: #555;
-}
-
-body.dark .barra-container {
-    background: #222;
-    border-color: #555;
-}
-
-body.dark #contador {
-    background: #000;
-    color: var(--color-timer-dark);
-    /* cian — ya contrasta bien */
-    box-shadow: 0 4px 12px rgba(0, 255, 204, 0.2);
-}
-
-/* Labels de campos en dorado */
-body.dark .campo label {
-    color: #FDD835;
-}
-
-/* Labels del header en dorado */
-body.dark .hora-input label,
-body.dark .label-restante {
-    color: #FDD835;
-}
-
-/* Hora actual en dorado con glow */
-body.dark #horaActual {
-    color: #FDD835;
-    text-shadow: 0 0 40px rgba(253, 216, 53, 0.3), 0 0 80px rgba(253, 216, 53, 0.1);
 }
 
 /* =========================
@@ -921,10 +848,6 @@ body.dark #horaActual {
     animation: pulse-espera 1.2s ease-in-out infinite;
 }
 
-body.dark #contador.en-espera,
-body.dark #contadorSolo.en-espera {
-    color: #ff4444 !important;
-}
 
 .tiempo-critico {
     animation: blink-red 1s infinite;
@@ -935,13 +858,7 @@ body.dark #contadorSolo.en-espera {
 }
 
 /* En modo oscuro el crítico: glow más intenso */
-body.dark #contadorSolo.tiempo-critico,
-body.dark #contador.tiempo-critico {
-    color: #ffffff !important;
-    background: #cc0000 !important;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 100, 100, 0.6) !important;
-    box-shadow: 0 0 0 4px #ff3333, 0 0 30px rgba(255, 0, 0, 0.7) !important;
-}
+
 
 /* Transición suave para cambios de tema */
 * {
@@ -1059,20 +976,7 @@ body.dark #contador.tiempo-critico {
 }
 
 /* Modo oscuro: modal con borde brillante y alto contraste */
-body.dark .modal-fin-contenido {
-    background: #1a1a1a;
-    border: 3px solid #ff3333;
-    box-shadow: 0 0 0 4px rgba(255, 50, 50, 0.3), 0 24px 80px rgba(255, 0, 0, 0.4), 0 0 60px rgba(255, 0, 0, 0.2);
-}
 
-body.dark .modal-fin-titulo {
-    color: #FFE600;
-    text-shadow: 0 0 20px rgba(255, 230, 0, 0.7);
-}
-
-body.dark .modal-fin-icono {
-    filter: drop-shadow(0 0 12px rgba(255, 230, 0, 0.8));
-}
 
 /* Contenedor del contador solo — oculto por defecto */
 .contador-solo-reloj {
@@ -1094,11 +998,6 @@ body.dark .modal-fin-icono {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-body.dark #contadorSolo {
-    background: #000;
-    color: var(--color-timer-dark);
-    box-shadow: 0 4px 12px rgba(0, 255, 204, 0.2);
-}
 
 /* En modo solo reloj: ocultar header, campos y botones */
 body.solo-reloj header,
@@ -1175,13 +1074,7 @@ body.solo-reloj .btn-salir-solo {
 }
 
 /* Dark mode en solo reloj */
-body.dark.solo-reloj .btn-salir-solo {
-    background: rgba(30, 30, 30, 0.6);
-}
 
-body.dark.solo-reloj .btn-salir-solo:hover {
-    background: rgba(211, 47, 47, 0.85);
-}
 
 /* =========================
    TOAST NOTIFICATIONS
@@ -1242,15 +1135,6 @@ body.dark.solo-reloj .btn-salir-solo:hover {
     border: 1px solid rgba(239, 83, 80, 0.3);
 }
 
-body.dark .toast-success {
-    background: rgba(46, 125, 50, 0.9);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(46, 125, 50, 0.2);
-}
-
-body.dark .toast-warning {
-    background: rgba(245, 127, 23, 0.9);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(245, 127, 23, 0.2);
-}
 
 /* =========================
    CUSTOM CONFIRM MODAL
@@ -1335,20 +1219,147 @@ body.dark .toast-warning {
 }
 
 /* Dark mode confirm */
+
+
+/* =========================
+   MODO ALTO CONTRASTE
+   Fondo negro puro + texto amarillo intenso + bordes gruesos.
+   Pensado para proyectores con poca luminosidad o salones con
+   mucha luz ambiental donde ni modo claro ni oscuro se ven bien.
+========================= */
+body.dark {
+    background: #000000;
+    color: #FFFF00;
+}
+
+body.dark header {
+    background: #000000;
+    border-bottom: 4px solid #FFFF00;
+    border-image: none;
+    box-shadow: none;
+}
+
+body.dark input,
+body.dark input[type="time"] {
+    background: #000000;
+    color: #FFFF00;
+    border: 3px solid #FFFF00;
+    font-weight: 900;
+}
+
+body.dark input::placeholder {
+    color: #888800;
+}
+
+body.dark .hora-input label,
+body.dark .label-restante,
+body.dark .campo label {
+    color: #FFFF00;
+}
+
+body.dark #horaActual {
+    color: #FFFF00;
+    text-shadow: none;
+}
+
+body.dark #contador,
+body.dark #contadorSolo {
+    background: #FFFF00;
+    color: #000000;
+    border: 3px solid #FFFF00;
+    box-shadow: none;
+    font-weight: 900;
+}
+
+body.dark .barra-container {
+    background: #000000;
+    border: 3px solid #FFFF00;
+}
+
+body.dark .barra-progreso.fase-verde,
+body.dark .barra-progreso.fase-amarillo {
+    background: #FFFF00;
+}
+
+body.dark .barra-progreso.fase-naranja,
+body.dark .barra-progreso.fase-rojo {
+    background: #FF6600;
+}
+
+body.dark .barra-porcentaje {
+    color: #ffffff;
+    text-shadow: none;
+    font-weight: 900;
+}
+
+body.dark .hora-input input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(90%) sepia(100%) saturate(2000%) hue-rotate(0deg) brightness(110%);
+}
+
+body.dark .btn-action {
+    background: #FFFF00;
+    color: #000000;
+    border: 3px solid #FFFF00;
+    font-weight: 900;
+    box-shadow: none;
+}
+
+body.dark .btn-action:hover {
+    background: #000000;
+    color: #FFFF00;
+    border-color: #FFFF00;
+}
+
+body.dark .btn-secondary {
+    background: #000000;
+    color: #FFFF00;
+    border: 3px solid #FFFF00;
+}
+
+body.dark .btn-secondary:hover {
+    background: #FFFF00;
+    color: #000000;
+}
+
+/* Modal fin y confirm en modo oscuro (alto contraste) */
+body.dark .modal-fin-contenido {
+    background: #000000;
+    border: 4px solid #FFFF00;
+    box-shadow: 0 0 0 4px rgba(255, 255, 0, 0.3), 0 24px 80px rgba(0, 0, 0, 0.6);
+}
+
+body.dark .modal-fin-titulo {
+    color: #FFFF00;
+    text-shadow: none;
+}
+
+body.dark .modal-fin-mensaje {
+    color: #FFFF00;
+}
+
+body.dark .modal-fin-btn {
+    background: #FFFF00;
+    color: #000000;
+    font-weight: 900;
+}
+
 body.dark .confirm-box {
-    background: #1e1e1e;
-    border: 1px solid #333;
+    background: #000000;
+    border: 3px solid #FFFF00;
 }
 
 body.dark .confirm-msg {
-    color: #f0f0f0;
+    color: #FFFF00;
 }
 
 body.dark .confirm-cancel {
-    background: #333;
-    color: #ccc;
+    background: #000000;
+    color: #FFFF00;
+    border: 2px solid #FFFF00;
 }
 
-body.dark .confirm-cancel:hover {
-    background: #444;
+body.dark .confirm-accept {
+    background: #FFFF00;
+    color: #000000;
+    font-weight: 900;
 }
