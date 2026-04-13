@@ -1243,7 +1243,7 @@ body.dark input,
 body.dark input[type="time"] {
     background: #000000;
     color: #FFFF00;
-    border: 3px solid #FFFF00;
+    border: 2px solid #555555;
     font-weight: 900;
 }
 
@@ -1273,7 +1273,7 @@ body.dark #contadorSolo {
 
 body.dark .barra-container {
     background: #000000;
-    border: 3px solid #FFFF00;
+    border: 2px solid #555555;
 }
 
 body.dark .barra-progreso.fase-verde,
@@ -1297,23 +1297,23 @@ body.dark .hora-input input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 body.dark .btn-action {
-    background: #FFFF00;
-    color: #000000;
-    border: 3px solid #FFFF00;
+    background: #000000;
+    color: #FFFF00;
+    border: 2px solid #FFFF00;
     font-weight: 900;
     box-shadow: none;
 }
 
 body.dark .btn-action:hover {
-    background: #000000;
-    color: #FFFF00;
+    background: #FFFF00;
+    color: #000000;
     border-color: #FFFF00;
 }
 
 body.dark .btn-secondary {
     background: #000000;
     color: #FFFF00;
-    border: 3px solid #FFFF00;
+    border: 2px solid #FFFF00;
 }
 
 body.dark .btn-secondary:hover {
