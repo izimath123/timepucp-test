@@ -588,3 +588,225 @@ console.log("⏰ TIMEPUCP - Sistema de temporizador iniciado");
 console.log("Atajos de teclado:");
 console.log("  F11: Pantalla completa");
 console.log("  Ctrl/Cmd + D: Modo oscuro");
+
+// =========================
+// PANEL DE APUNTES
+// =========================
+(function () {
+    const panel = document.getElementById("panelApuntes");
+    const header = document.getElementById("panelApuntesHeader");
+    const textarea = document.getElementById("apuntesTexto");
+    const btnAbrir = document.getElementById("btnApuntes");
+    const btnCerrar = document.getElementById("btnCerrarApuntes");
+    const btnFontUp = document.getElementById("btnApuntesFontUp");
+    const btnFontDown = document.getElementById("btnApuntesFontDown");
+
+    let fontSize = 28; // px — tamaño inicial grande para proyector
+    const FONT_MIN = 16;
+    const FONT_MAX = 56;
+    const FONT_STEP = 4;
+
+    // --- Abrir / Cerrar ---
+    btnAbrir.addEventListener("click", () => {
+        if (panel.classList.contains("visible")) {
+            panel.classList.remove("visible");
+        } else {
+            // Centrar al abrir si no fue movido previamente
+            if (!panel.dataset.moved) {
+                panel.style.top = "50%";
+                panel.style.left = "50%";
+                panel.style.transform = "translate(-50%, -50%)";
+            }
+            panel.classList.add("visible");
+            textarea.focus();
+        }
+    });
+
+    btnCerrar.addEventListener("click", () => {
+        panel.classList.remove("visible");
+    });
+
+    // --- Tamaño de fuente ---
+    btnFontUp.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (fontSize < FONT_MAX) {
+            fontSize += FONT_STEP;
+            textarea.style.fontSize = fontSize + "px";
+        }
+    });
+
+    btnFontDown.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (fontSize > FONT_MIN) {
+            fontSize -= FONT_STEP;
+            textarea.style.fontSize = fontSize + "px";
+        }
+    });
+
+    // --- Arrastre (drag) ---
+    let isDragging = false;
+    let dragOffsetX = 0;
+    let dragOffsetY = 0;
+
+    header.addEventListener("mousedown", startDrag);
+    header.addEventListener("touchstart", startDrag, { passive: false });
+
+    function startDrag(e) {
+        // No arrastrar si se hizo click en un botón
+        if (e.target.closest("button")) return;
+        e.preventDefault();
+        isDragging = true;
+
+        // Quitar transform de centrado al primer drag
+        if (!panel.dataset.moved) {
+            const rect = panel.getBoundingClientRect();
+            panel.style.top = rect.top + "px";
+            panel.style.left = rect.left + "px";
+            panel.style.transform = "none";
+            panel.dataset.moved = "1";
+        }
+
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        dragOffsetX = clientX - panel.getBoundingClientRect().left;
+        dragOffsetY = clientY - panel.getBoundingClientRect().top;
+
+        document.addEventListener("mousemove", onDrag);
+        document.addEventListener("mouseup", stopDrag);
+        document.addEventListener("touchmove", onDrag, { passive: false });
+        document.addEventListener("touchend", stopDrag);
+    }
+
+    function onDrag(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+        let newLeft = clientX - dragOffsetX;
+        let newTop = clientY - dragOffsetY;
+
+        // Mantener dentro de la ventana
+        const pw = panel.offsetWidth;
+        const ph = panel.offsetHeight;
+        newLeft = Math.max(0, Math.min(newLeft, window.innerWidth - pw));
+        newTop = Math.max(0, Math.min(newTop, window.innerHeight - ph));
+
+        panel.style.left = newLeft + "px";
+        panel.style.top = newTop + "px";
+    }
+
+    function stopDrag() {
+        isDragging = false;
+        document.removeEventListener("mousemove", onDrag);
+        document.removeEventListener("mouseup", stopDrag);
+        document.removeEventListener("touchmove", onDrag);
+        document.removeEventListener("touchend", stopDrag);
+    }
+
+    // --- Redimensionado desde bordes y esquinas ---
+    let isResizing = false;
+    let resizeDir = "";
+    let resizeStartX = 0;
+    let resizeStartY = 0;
+    let resizeStartW = 0;
+    let resizeStartH = 0;
+    let resizeStartL = 0;
+    let resizeStartT = 0;
+
+    const MIN_W = 280;
+    const MIN_H = 180;
+
+    panel.querySelectorAll(".pa-edge").forEach(edge => {
+        edge.addEventListener("mousedown", startResize);
+        edge.addEventListener("touchstart", startResize, { passive: false });
+    });
+
+    function startResize(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        isResizing = true;
+        resizeDir = e.currentTarget.dataset.dir;
+
+        // Asegurar posición absoluta
+        if (!panel.dataset.moved) {
+            const rect = panel.getBoundingClientRect();
+            panel.style.top = rect.top + "px";
+            panel.style.left = rect.left + "px";
+            panel.style.transform = "none";
+            panel.dataset.moved = "1";
+        }
+
+        const rect = panel.getBoundingClientRect();
+        resizeStartX = e.touches ? e.touches[0].clientX : e.clientX;
+        resizeStartY = e.touches ? e.touches[0].clientY : e.clientY;
+        resizeStartW = rect.width;
+        resizeStartH = rect.height;
+        resizeStartL = rect.left;
+        resizeStartT = rect.top;
+
+        document.addEventListener("mousemove", onResize);
+        document.addEventListener("mouseup", stopResize);
+        document.addEventListener("touchmove", onResize, { passive: false });
+        document.addEventListener("touchend", stopResize);
+    }
+
+    function onResize(e) {
+        if (!isResizing) return;
+        e.preventDefault();
+
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        const dx = clientX - resizeStartX;
+        const dy = clientY - resizeStartY;
+
+        let newW = resizeStartW;
+        let newH = resizeStartH;
+        let newL = resizeStartL;
+        let newT = resizeStartT;
+
+        const dir = resizeDir;
+
+        // Horizontal
+        if (dir.includes("e")) {
+            newW = Math.max(MIN_W, resizeStartW + dx);
+            newW = Math.min(newW, window.innerWidth - newL);
+        }
+        if (dir.includes("w")) {
+            const maxDx = resizeStartW - MIN_W;
+            const clampedDx = Math.min(dx, maxDx);
+            newL = Math.max(0, resizeStartL + clampedDx);
+            newW = resizeStartW - (newL - resizeStartL);
+        }
+
+        // Vertical
+        if (dir.includes("s")) {
+            newH = Math.max(MIN_H, resizeStartH + dy);
+            newH = Math.min(newH, window.innerHeight - newT);
+        }
+        if (dir.includes("n")) {
+            const maxDy = resizeStartH - MIN_H;
+            const clampedDy = Math.min(dy, maxDy);
+            newT = Math.max(0, resizeStartT + clampedDy);
+            newH = resizeStartH - (newT - resizeStartT);
+        }
+
+        panel.style.width = newW + "px";
+        panel.style.height = newH + "px";
+        panel.style.left = newL + "px";
+        panel.style.top = newT + "px";
+    }
+
+    function stopResize() {
+        isResizing = false;
+        document.removeEventListener("mousemove", onResize);
+        document.removeEventListener("mouseup", stopResize);
+        document.removeEventListener("touchmove", onResize);
+        document.removeEventListener("touchend", stopResize);
+    }
+
+    // Prevenir que el textarea inicie un drag
+    textarea.addEventListener("mousedown", (e) => e.stopPropagation());
+    textarea.addEventListener("touchstart", (e) => e.stopPropagation());
+})();

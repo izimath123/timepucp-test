@@ -173,6 +173,10 @@
                         <span class="icon">🕐</span>
                         <span class="text">Solo reloj</span>
                     </button>
+                    <button id="btnApuntes" class="btn-action" aria-label="Abrir panel de apuntes">
+                        <span class="icon">📝</span>
+                        <span class="text">Apuntes</span>
+                    </button>
                     <button id="btnReset" class="btn-action btn-secondary" aria-label="Reiniciar temporizador">
                         <span class="icon">↻</span>
                         <span class="text">Reiniciar</span>
@@ -181,6 +185,28 @@
             </div>
         </div>
     </main>
+
+    <!-- Panel flotante de apuntes -->
+    <div id="panelApuntes" class="panel-apuntes" role="dialog" aria-label="Panel de apuntes">
+        <div class="panel-apuntes-header" id="panelApuntesHeader">
+            <span class="panel-apuntes-titulo">📝 Apuntes</span>
+            <div class="panel-apuntes-controles">
+                <button class="panel-apuntes-btn-size" id="btnApuntesFontUp" aria-label="Aumentar fuente" title="Aumentar fuente">A+</button>
+                <button class="panel-apuntes-btn-size" id="btnApuntesFontDown" aria-label="Reducir fuente" title="Reducir fuente">A−</button>
+                <button class="panel-apuntes-cerrar" id="btnCerrarApuntes" aria-label="Cerrar apuntes">✕</button>
+            </div>
+        </div>
+        <textarea id="apuntesTexto" class="panel-apuntes-texto" placeholder="Escribe aquí un anuncio, corrección o apunte para los alumnos..."></textarea>
+        <!-- Bordes de redimensionado -->
+        <div class="pa-edge pa-edge-n" data-dir="n" aria-hidden="true"></div>
+        <div class="pa-edge pa-edge-s" data-dir="s" aria-hidden="true"></div>
+        <div class="pa-edge pa-edge-e" data-dir="e" aria-hidden="true"></div>
+        <div class="pa-edge pa-edge-w" data-dir="w" aria-hidden="true"></div>
+        <div class="pa-edge pa-edge-ne" data-dir="ne" aria-hidden="true"></div>
+        <div class="pa-edge pa-edge-nw" data-dir="nw" aria-hidden="true"></div>
+        <div class="pa-edge pa-edge-se" data-dir="se" aria-hidden="true"></div>
+        <div class="pa-edge pa-edge-sw" data-dir="sw" aria-hidden="true"></div>
+    </div>
 
     <!-- Botón flotante para salir del modo solo reloj -->
     <!-- Modal: Evaluación terminada -->
