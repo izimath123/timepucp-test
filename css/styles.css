@@ -354,7 +354,7 @@ main {
 
 /* Fase 4: Rojo — tiempo crítico (93–100%) */
 .barra-progreso.fase-rojo {
-    background: linear-gradient(90deg, #1B2A4A, #2C3E6B);
+    background: linear-gradient(90deg, #b71c1c, #e53935);
 }
 
 /* Dark mode: colores más vibrantes */
@@ -853,9 +853,9 @@ main {
 .tiempo-critico {
     animation: blink-red 1s infinite;
     color: #ffffff !important;
-    background: #1B2A4A !important;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(59, 89, 152, 0.6) !important;
-    box-shadow: 0 0 0 4px #3B5998, 0 0 30px rgba(27, 42, 74, 0.5) !important;
+    background: #cc0000 !important;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 100, 100, 0.6) !important;
+    box-shadow: 0 0 0 4px #ff3333, 0 0 30px rgba(255, 0, 0, 0.5) !important;
 }
 
 /* En modo oscuro el crítico: glow más intenso */
