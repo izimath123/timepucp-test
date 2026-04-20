@@ -833,19 +833,21 @@ main {
 
     0%,
     100% {
-        box-shadow: 0 0 0 0px rgba(27, 42, 74, 0);
-        background: #0a1020;
+        box-shadow: 0 0 0 0px rgba(204, 0, 0, 0);
+        background: #cc0000;
     }
 
     50% {
-        box-shadow: 0 0 0 6px rgba(27, 42, 74, 0.25);
-        background: #121d35;
+        box-shadow: 0 0 0 6px rgba(255, 51, 51, 0.4);
+        background: #e60000;
     }
 }
 
 #contador.en-espera,
 #contadorSolo.en-espera {
-    color: var(--color-primary) !important;
+    color: #ffffff !important;
+    background: #cc0000 !important;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 100, 100, 0.6) !important;
     animation: pulse-espera 1.2s ease-in-out infinite;
 }
 
