@@ -47,34 +47,26 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "¿TIMEPUCP es gratis? ¿Necesito registrarme?",
+      "name": "¿Es gratis? ¿Necesito registrarme?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Es gratis y no requiere cuenta ni instalación. Basta con abrir timepucp.site en el navegador."
+        "text": "Es gratis y no requiere cuenta ni instalación: basta con abrir timepucp.site en el navegador."
       }
     },
     {
       "@type": "Question",
-      "name": "¿Puedo usarlo con un proyector en el aula?",
+      "name": "¿Puedo usarlo con un proyector?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Sí, está pensado para eso. Activa Pantalla completa para ocupar todo el proyector, o Solo reloj si prefieres ocultar los datos y mostrar el reloj, la barra de progreso y el tiempo restante en tamaño grande."
+        "text": "Sí, está pensado para eso. Usa Pantalla completa o Solo reloj."
       }
     },
     {
       "@type": "Question",
-      "name": "¿Qué pasa si se cae el internet durante la evaluación?",
+      "name": "¿El tiempo es confiable si se cae el internet o la pestaña queda en segundo plano?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "La cuenta regresiva se calcula con la hora del propio equipo, así que una vez cargada la página sigue funcionando aunque se pierda la conexión, siempre que no cierres ni recargues la pestaña."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "¿El tiempo se atrasa si la pestaña queda en segundo plano?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "No. En cada actualización el temporizador recalcula el tiempo restante con la hora real, por lo que el valor mostrado es correcto aunque la pestaña haya estado en segundo plano."
+        "text": "Sí. En cada actualización se recalcula el tiempo restante con la hora del equipo, así que sigue correcto sin conexión o con la pestaña en segundo plano, siempre que no cierres ni recargues la página."
       }
     },
     {
@@ -82,15 +74,7 @@
       "name": "¿Se guardan los datos si recargo la página?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. Cada vez que se abre o se recarga la página, esta empieza desde cero y no conserva los datos anteriores. Por eso conviene no recargar durante una evaluación en curso; si ocurre, vuelve a ingresar la hora de inicio y de fin."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "¿Puedo programar una evaluación que cruza la medianoche?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Sí. Si la hora de fin es menor o igual que la de inicio, el temporizador entiende que el fin corresponde al día siguiente."
+        "text": "No. Cada vez que se abre o se recarga la página empieza desde cero. Evita recargar durante una evaluación; si ocurre, vuelve a ingresar la hora de inicio y de fin."
       }
     },
     {
@@ -103,10 +87,10 @@
     },
     {
       "@type": "Question",
-      "name": "¿Qué información se envía o se guarda sobre mi uso?",
+      "name": "¿Qué información se envía sobre mi uso?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Los datos que escribes (curso, profesor, horario, clave) se quedan en tu navegador y no se envían. Se usa Google Analytics solo para estadísticas generales de uso, como cuántas evaluaciones se inician o con qué tamaño de pantalla."
+        "text": "Los datos que escribes (curso, profesor, horario, clave) se quedan en tu navegador y no se envían. Se usa Google Analytics solo para estadísticas generales, como cuántas evaluaciones se inician o con qué tamaño de pantalla."
       }
     }
   ]
@@ -168,66 +152,54 @@
         </nav>
 
         <h1>Cómo usar TIMEPUCP, el temporizador para exámenes y evaluaciones</h1>
-        <p class="intro">TIMEPUCP es una página gratuita que muestra la hora actual, una cuenta regresiva hasta la hora de fin y una barra de progreso, junto con los datos de la evaluación. Está pensada para proyectarse en el aula y se configura en menos de un minuto, sin registro ni instalación.</p>
+        <p class="intro">TIMEPUCP es un temporizador gratuito para exámenes: muestra la hora actual, la cuenta regresiva hasta el fin y una barra de progreso, junto con los datos de la evaluación. Se proyecta en el aula, funciona en cualquier navegador moderno y no requiere registro ni instalación.</p>
 
         <p><a class="boton boton-grande" href="../">Abrir el temporizador</a></p>
 
-        <h2>Configurar una evaluación en 4 pasos</h2>
+        <h2>Cómo usarlo</h2>
         <ol class="pasos">
-        <li><strong>Abre el temporizador.</strong> Entra a timepucp.site desde cualquier navegador moderno. No hace falta registrarse ni instalar nada.</li>
-        <li><strong>Elige la hora de inicio y de fin.</strong> En la barra superior define Inicio y Fin. Antes de la hora de inicio, la pantalla muestra la duración total de la evaluación; cuando llega la hora, empieza la cuenta regresiva. Si el fin es menor que el inicio, se entiende que la evaluación cruza la medianoche.</li>
-        <li><strong>Escribe los datos de la evaluación.</strong> Completa curso, evaluación, profesor, horario de práctica, clave del curso y fecha. Los datos los ingresa quien controla la evaluación y quedan visibles para todo el salón.</li>
-        <li><strong>Proyecta la pantalla.</strong> Pulsa Pantalla completa para ocupar todo el proyector. Si prefieres ocultar los datos y mostrar solo el reloj y el tiempo restante en grande, usa Solo reloj.</li>
+        <li><strong>Define inicio y fin.</strong> En la barra superior elige la hora de Inicio y de Fin. Antes del inicio se muestra la duración total; al llegar la hora comienza la cuenta regresiva. Si el fin es menor que el inicio, se entiende que cruza la medianoche.</li>
+        <li><strong>Escribe los datos.</strong> Curso, evaluación, profesor, horario de práctica, clave del curso y fecha. Los ingresa quien controla la evaluación y quedan visibles para todo el salón.</li>
+        <li><strong>Proyecta la pantalla.</strong> Usa Pantalla completa para ocupar todo el proyector, o Solo reloj para mostrar únicamente lo esencial.</li>
         </ol>
 
-        <h2>Qué puedes hacer con TIMEPUCP</h2>
+        <h2>Funciones</h2>
         <ul class="funciones">
-        <li><strong>Cuenta regresiva y barra de progreso.</strong> Muestra el tiempo restante en horas, minutos y segundos, junto con una barra que avanza hasta el fin y cambia de color a medida que se acaba el tiempo.</li>
-        <li><strong>Avisos de tiempo.</strong> Cuando quedan menos de 5 minutos el contador entra en advertencia, y con menos de 1 minuto pasa a estado crítico. Al llegar a cero suena una alerta y aparece el aviso «¡Evaluación terminada!».</li>
-        <li><strong>Reloj en tiempo real.</strong> Junto a la cuenta regresiva se ve la hora actual, útil para que los alumnos se ubiquen.</li>
-        <li><strong>Pantalla completa y Solo reloj.</strong> Pantalla completa aprovecha todo el proyector. Solo reloj oculta la barra superior y los datos de la evaluación, y deja a la vista la hora actual en grande, la barra de progreso y el tiempo restante; el botón Salir permite volver.</li>
-        <li><strong>Modo oscuro.</strong> Cambia los colores para ambientes con poca luz o proyectores con mucho brillo.</li>
-        <li><strong>Panel de apuntes.</strong> Una ventana flotante donde el profesor puede escribir anuncios o correcciones para los alumnos. Se puede mover, cambiar de tamaño y ajustar el tamaño de la letra.</li>
+        <li><strong>Cuenta regresiva y barra de progreso.</strong> Muestra horas, minutos y segundos restantes; la barra cambia de color a medida que se acaba el tiempo.</li>
+        <li><strong>Avisos.</strong> Advertencia con menos de 5 minutos y estado crítico con menos de 1. Al llegar a cero suena una alerta y aparece «¡Evaluación terminada!».</li>
+        <li><strong>Solo reloj.</strong> Oculta la barra superior y los datos, y deja en grande la hora actual, la barra de progreso y el tiempo restante. El botón Salir permite volver.</li>
+        <li><strong>Modo oscuro.</strong> Para ambientes con poca luz o proyectores muy brillantes.</li>
+        <li><strong>Apuntes.</strong> Ventana flotante para anuncios o correcciones; se puede mover, cambiar de tamaño y ajustar la letra.</li>
         <li><strong>Reiniciar.</strong> Borra los datos y detiene la cuenta regresiva para configurar otra evaluación.</li>
         </ul>
 
         <h2>Preguntas frecuentes</h2>
         <div class="faq">
         <details>
-          <summary>¿TIMEPUCP es gratis? ¿Necesito registrarme?</summary>
-          <p>Es gratis y no requiere cuenta ni instalación. Basta con abrir timepucp.site en el navegador.</p>
+          <summary>¿Es gratis? ¿Necesito registrarme?</summary>
+          <p>Es gratis y no requiere cuenta ni instalación: basta con abrir timepucp.site en el navegador.</p>
         </details>
         <details>
-          <summary>¿Puedo usarlo con un proyector en el aula?</summary>
-          <p>Sí, está pensado para eso. Activa Pantalla completa para ocupar todo el proyector, o Solo reloj si prefieres ocultar los datos y mostrar el reloj, la barra de progreso y el tiempo restante en tamaño grande.</p>
+          <summary>¿Puedo usarlo con un proyector?</summary>
+          <p>Sí, está pensado para eso. Usa Pantalla completa o Solo reloj.</p>
         </details>
         <details>
-          <summary>¿Qué pasa si se cae el internet durante la evaluación?</summary>
-          <p>La cuenta regresiva se calcula con la hora del propio equipo, así que una vez cargada la página sigue funcionando aunque se pierda la conexión, siempre que no cierres ni recargues la pestaña.</p>
-        </details>
-        <details>
-          <summary>¿El tiempo se atrasa si la pestaña queda en segundo plano?</summary>
-          <p>No. En cada actualización el temporizador recalcula el tiempo restante con la hora real, por lo que el valor mostrado es correcto aunque la pestaña haya estado en segundo plano.</p>
+          <summary>¿El tiempo es confiable si se cae el internet o la pestaña queda en segundo plano?</summary>
+          <p>Sí. En cada actualización se recalcula el tiempo restante con la hora del equipo, así que sigue correcto sin conexión o con la pestaña en segundo plano, siempre que no cierres ni recargues la página.</p>
         </details>
         <details>
           <summary>¿Se guardan los datos si recargo la página?</summary>
-          <p>No. Cada vez que se abre o se recarga la página, esta empieza desde cero y no conserva los datos anteriores. Por eso conviene no recargar durante una evaluación en curso; si ocurre, vuelve a ingresar la hora de inicio y de fin.</p>
-        </details>
-        <details>
-          <summary>¿Puedo programar una evaluación que cruza la medianoche?</summary>
-          <p>Sí. Si la hora de fin es menor o igual que la de inicio, el temporizador entiende que el fin corresponde al día siguiente.</p>
+          <p>No. Cada vez que se abre o se recarga la página empieza desde cero. Evita recargar durante una evaluación; si ocurre, vuelve a ingresar la hora de inicio y de fin.</p>
         </details>
         <details>
           <summary>¿Sirve solo para la PUCP?</summary>
           <p>Está pensado para aulas de la PUCP, pero no depende de ninguna institución: sirve para cualquier evaluación con tiempo limitado.</p>
         </details>
         <details>
-          <summary>¿Qué información se envía o se guarda sobre mi uso?</summary>
-          <p>Los datos que escribes (curso, profesor, horario, clave) se quedan en tu navegador y no se envían. Se usa Google Analytics solo para estadísticas generales de uso, como cuántas evaluaciones se inician o con qué tamaño de pantalla.</p>
+          <summary>¿Qué información se envía sobre mi uso?</summary>
+          <p>Los datos que escribes (curso, profesor, horario, clave) se quedan en tu navegador y no se envían. Se usa Google Analytics solo para estadísticas generales, como cuántas evaluaciones se inician o con qué tamaño de pantalla.</p>
         </details>
         </div>
-
-        <p class="cierre">¿Listo para tu próxima evaluación? <a href="../">Abre el temporizador</a> y configura el inicio y el fin.</p>
 
         <section class="contacto" aria-labelledby="contacto-titulo">
             <h2 id="contacto-titulo">Comentarios y contacto</h2>

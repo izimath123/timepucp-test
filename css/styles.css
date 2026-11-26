@@ -1545,8 +1545,8 @@ body.dark .panel-apuntes-texto::placeholder {
 ========================= */
 .enlace-guia {
     position: fixed;
-    left: 10px;
-    bottom: 4px;
+    left: 18px;
+    bottom: 14px;
     z-index: 5;
     font-size: 11px;
     line-height: 1;
