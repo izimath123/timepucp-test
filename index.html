@@ -22,20 +22,21 @@
     <meta property="og:url" content="https://timepucp.site/">
     <meta property="og:title" content="TIMEPUCP - Temporizador de Exámenes">
     <meta property="og:description" content="Temporizador gratuito para exámenes y evaluaciones universitarias. Reloj en tiempo real, cuenta regresiva, barra de progreso, modo oscuro y pantalla completa.">
-    <meta property="og:image" content="https://timepucp.site/web-app-manifest-512x512.png">
-    <meta property="og:image:width" content="512">
-    <meta property="og:image:height" content="512">
+    <meta property="og:image" content="https://timepucp.site/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="TIMEPUCP, temporizador para exámenes y evaluaciones">
     <meta property="og:locale" content="es_PE">
     <meta property="og:site_name" content="TIMEPUCP">
 
     <!-- =====================
          TWITTER CARD
     ===================== -->
-    <meta name="twitter:card" content="summary">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://timepucp.site/">
     <meta name="twitter:title" content="TIMEPUCP - Temporizador de Exámenes">
     <meta name="twitter:description" content="Temporizador gratuito para exámenes y evaluaciones universitarias. Reloj en tiempo real, cuenta regresiva y barra de progreso.">
-    <meta name="twitter:image" content="https://timepucp.site/web-app-manifest-512x512.png">
+    <meta name="twitter:image" content="https://timepucp.site/og-image.png">
 
     <!-- =====================
          STRUCTURED DATA (JSON-LD)
@@ -74,9 +75,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T51YWYV1H6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T51YWYV1H6');
+    </script>
+
 </head>
 
 <body>
+
+    <h1 style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">TIMEPUCP – Temporizador de exámenes online para aulas</h1>
 
     <header>
         <div class="config">
@@ -134,7 +147,7 @@
             <div class="fila fila-2">
                 <div class="campo">
                     <label for="profesor">Profesor:</label>
-                    <input type="text" placeholder="Profesor" id="profesor">
+                    <input type="text" placeholder="C. Q." id="profesor">
                 </div>
 
                 <div class="campo campo-horario">
@@ -213,7 +226,7 @@
     <div id="modalFin" class="modal-fin" role="dialog" aria-modal="true" aria-label="Evaluación terminada">
         <div class="modal-fin-contenido">
             <div class="modal-fin-icono">⏱</div>
-            <h1 class="modal-fin-titulo">¡Evaluación terminada!</h1>
+            <h2 class="modal-fin-titulo">¡Evaluación terminada!</h2>
 
             <button id="btnCerrarModal" class="modal-fin-btn">Cerrar</button>
         </div>
@@ -223,6 +236,8 @@
         <span class="icon">✕</span>
         <span class="text">Salir</span>
     </button>
+
+    <a class="enlace-guia" href="guia/">Guía de uso</a>
 
     <script src="js/timer.js"></script>
 

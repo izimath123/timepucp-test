@@ -1539,4 +1539,30 @@ body.dark .panel-apuntes-texto::placeholder {
     color: #888800;
 }
 
-
+/* =========================
+   ENLACE DISCRETO A LA GUÍA (SEO)
+   Fuera del flujo (fixed): no altera el diseño del temporizador.
+========================= */
+.enlace-guia {
+    position: fixed;
+    left: 10px;
+    bottom: 4px;
+    z-index: 5;
+    font-size: 11px;
+    line-height: 1;
+    color: inherit;
+    opacity: 0.45;
+    text-decoration: none;
+}
+.enlace-guia:hover,
+.enlace-guia:focus-visible {
+    opacity: 1;
+    text-decoration: underline;
+}
+:fullscreen .enlace-guia,
+body.solo-reloj .enlace-guia {
+    display: none;
+}
+@media print {
+    .enlace-guia { display: none; }
+}
