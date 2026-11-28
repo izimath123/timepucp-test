@@ -94,21 +94,21 @@
     <header>
         <div class="config">
             <div class="hora-input">
-                <label for="horaInicio">Inicio</label>
+                <label for="horaInicio">Inicio:</label>
                 <div class="time-wrapper">
                     <input type="time" id="horaInicio" aria-label="Hora de inicio del examen">
                 </div>
             </div>
 
             <div class="hora-input">
-                <label for="horaFin">Fin</label>
+                <label for="horaFin">Fin:</label>
                 <div class="time-wrapper">
                     <input type="time" id="horaFin" aria-label="Hora de fin del examen">
                 </div>
             </div>
 
             <div class="tiempo-restante">
-                <span class="label-restante">Tiempo Restante</span>
+                <span class="label-restante">Tiempo restante</span>
                 <span id="contador" role="timer" aria-live="polite">00:00:00</span>
             </div>
         </div>
@@ -130,52 +130,51 @@
         </div>
 
         <div class="info">
-            <!-- Fila 1: Curso + Profesor -->
-            <div class="fila fila-1">
-                <div class="campo">
-                    <label for="curso">Curso:</label>
-                    <input type="text" placeholder="Curso" id="curso">
-                </div>
-
-                <div class="campo campo-profesor">
-                    <label for="profesor">Profesor:</label>
-                    <input type="text" placeholder="C. Q." id="profesor">
-                </div>
-            </div>
-
-            <!-- Fila 2: Evaluación + Horario y Aula -->
-            <div class="fila fila-2">
-                <div class="campo campo-evaluacion">
-                    <label for="evaluacion">Evaluación:</label>
-                    <input type="text" placeholder="Evaluación" id="evaluacion">
-                </div>
-
-                <div class="campo-doble">
-                    <div class="campo campo-horario">
-                        <label for="aula">Horario:</label>
-                        <input type="text" placeholder="0123" id="aula">
+            <div class="tarjetas">
+                <!-- Tarjeta izquierda: datos del curso -->
+                <section class="tarjeta tarjeta-izq" aria-label="Datos del curso">
+                    <div class="campo campo-curso">
+                        <label for="curso"><span class="lbl-txt">Curso:</span></label>
+                        <input type="text" placeholder="Curso" id="curso">
                     </div>
 
-                    <div class="campo campo-aula">
-                        <label for="aulaSalon">Aula:</label>
-                        <input type="text" placeholder="Z123" id="aulaSalon">
+                    <div class="campo campo-evaluacion">
+                        <label for="evaluacion"><span class="lbl-txt">Evaluación:</span></label>
+                        <input type="text" placeholder="Evaluación" id="evaluacion">
                     </div>
-                </div>
-            </div>
 
-            <!-- Fila 3: Clave del curso + Fecha -->
-            <div class="fila fila-3">
-                <div class="campo campo-clave">
-                    <label for="claveCurso">Clave del curso:</label>
-                    <input type="text" placeholder="EST123" id="claveCurso">
-                </div>
+                    <div class="campo campo-clave">
+                        <label for="claveCurso"><span class="lbl-txt">Clave del curso:</span></label>
+                        <input type="text" placeholder="EST123" id="claveCurso">
+                    </div>
+                </section>
 
-                <div class="campo campo-fecha">
-                    <label for="fechaTexto">Fecha:</label>
-                    <input type="text" id="fechaTexto" placeholder="dd/mm/yyyy" readonly aria-label="Fecha del examen">
-                    <input type="date" id="fecha" style="position:absolute; opacity:0; pointer-events:none;"
-                        aria-hidden="true">
-                </div>
+                <!-- Tarjeta derecha: profesor, fecha y lugar -->
+                <section class="tarjeta tarjeta-der" aria-label="Datos de la sesión">
+                    <div class="campo campo-profesor">
+                        <label for="profesor"><span class="lbl-txt">Profesor:</span></label>
+                        <input type="text" placeholder="C. Q." id="profesor">
+                    </div>
+
+                    <div class="campo campo-fecha">
+                        <label for="fechaTexto"><span class="lbl-txt">Fecha:</span></label>
+                        <input type="text" id="fechaTexto" placeholder="dd/mm/yyyy" readonly aria-label="Fecha del examen">
+                        <input type="date" id="fecha" style="position:absolute; opacity:0; pointer-events:none;"
+                            aria-hidden="true">
+                    </div>
+
+                    <div class="campo-doble">
+                        <div class="campo campo-horario">
+                            <label for="aula"><span class="lbl-txt">Horario:</span></label>
+                            <input type="text" placeholder="0123" id="aula">
+                        </div>
+
+                        <div class="campo campo-aula">
+                            <label for="aulaSalon"><span class="lbl-txt">Aula:</span></label>
+                            <input type="text" placeholder="Z123" id="aulaSalon">
+                        </div>
+                    </div>
+                </section>
             </div>
 
             <!-- Fila 4: Botones -->

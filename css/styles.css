@@ -1590,3 +1590,278 @@ body.solo-reloj .enlace-guia {
 .campo-fecha label {
     min-width: 4.8em;
 }
+
+/* =====================================================================
+   REDISEÑO: TARJETAS FLOTANTES CON ICONOS
+   Capa visual añadida al final: no cambia ids ni funcionamiento.
+   Los tamaños de letra y de cajas siguen los de los bloques responsive
+   de arriba; aquí solo se cambian estructura, sombras, bordes e iconos.
+===================================================================== */
+:root {
+    --ico-curso: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M22 10 12 5 2 10l10 5 10-5Z%22/%3E%3Cpath d=%22M6 12v5c3 3 9 3 12 0v-5%22/%3E%3Cpath d=%22M22 10v6%22/%3E%3C/svg%3E");
+    --ico-evaluacion: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M8 6h13M8 12h13M8 18h13%22/%3E%3Cpath d=%22M3 6h.01M3 12h.01M3 18h.01%22/%3E%3C/svg%3E");
+    --ico-clave: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Ccircle cx=%227.5%22 cy=%2215.5%22 r=%224.5%22/%3E%3Cpath d=%22m10.7 12.3 9.8-9.8%22/%3E%3Cpath d=%22m16 7 3 3%22/%3E%3Cpath d=%22m18.5 4.5 2 2%22/%3E%3C/svg%3E");
+    --ico-profesor: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2%22/%3E%3Ccircle cx=%2212%22 cy=%227%22 r=%224%22/%3E%3C/svg%3E");
+    --ico-fecha: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Crect x=%223%22 y=%224%22 width=%2218%22 height=%2218%22 rx=%222%22/%3E%3Cpath d=%22M16 2v4M8 2v4M3 10h18%22/%3E%3C/svg%3E");
+    --ico-horario: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22m12 2 10 5-10 5L2 7l10-5Z%22/%3E%3Cpath d=%22m2 17 10 5 10-5%22/%3E%3Cpath d=%22m2 12 10 5 10-5%22/%3E%3C/svg%3E");
+    --ico-aula: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z%22/%3E%3Ccircle cx=%2212%22 cy=%2210%22 r=%223%22/%3E%3C/svg%3E");
+    --ico-full: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M16 21h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3%22/%3E%3C/svg%3E");
+    --ico-fullsalir: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M8 3v3a2 2 0 0 1-2 2H3M21 8h-3a2 2 0 0 1-2-2V3M16 21v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3%22/%3E%3C/svg%3E");
+    --ico-luna: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z%22/%3E%3C/svg%3E");
+    --ico-sol: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Ccircle cx=%2212%22 cy=%2212%22 r=%224%22/%3E%3Cpath d=%22M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41%22/%3E%3C/svg%3E");
+    --ico-reloj: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Ccircle cx=%2212%22 cy=%2212%22 r=%229%22/%3E%3Cpath d=%22M12 7v5l3 2%22/%3E%3C/svg%3E");
+    --ico-apuntes: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z%22/%3E%3Cpath d=%22M14 2v6h6M8 13h8M8 17h8M8 9h2%22/%3E%3C/svg%3E");
+    --ico-reiniciar: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M3 12a9 9 0 0 1 15.5-6.2L21 8%22/%3E%3Cpath d=%22M21 3v5h-5%22/%3E%3Cpath d=%22M21 12a9 9 0 0 1-15.5 6.2L3 16%22/%3E%3Cpath d=%22M8 16H3v5%22/%3E%3C/svg%3E");
+}
+
+/* ---- Fondo con un poco más de contraste para que las tarjetas floten ---- */
+body:not(.dark) {
+    background: radial-gradient(ellipse at top, #f3f5f9 0%, #dde2ea 100%);
+}
+
+/* ---- Encabezado como tarjeta flotante ---- */
+header {
+    width: calc(100% - 40px);
+    max-width: 1880px;
+    margin: 12px auto 0;
+    border-radius: 20px;
+    border-bottom: 0;
+}
+
+body:not(.dark) header {
+    border: 1px solid rgba(27, 42, 74, 0.12);
+    background: linear-gradient(180deg, #ffffff 0%, #f6f8fb 100%);
+    box-shadow:
+        0 12px 28px rgba(20, 30, 60, 0.14),
+        0 3px 8px rgba(20, 30, 60, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+body.dark header {
+    border: 3px solid #FFFF00;
+    border-radius: 20px;
+}
+
+@media (max-width: 900px) {
+    header {
+        width: calc(100% - 24px);
+        margin-top: 8px;
+        border-radius: 16px;
+    }
+}
+
+/* ---- Barra de progreso con un poco de relieve ---- */
+body:not(.dark) .barra-container {
+    box-shadow:
+        inset 0 2px 5px rgba(0, 0, 0, 0.18),
+        0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* ---- Tarjetas de datos ---- */
+.tarjetas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 26px;
+    width: 100%;
+}
+
+.tarjeta {
+    display: grid;
+    align-content: center;
+    gap: 10px;
+    padding: 14px 20px;
+    border-radius: 22px;
+    min-width: 0;
+}
+
+body:not(.dark) .tarjeta {
+    background: linear-gradient(180deg, #ffffff 0%, #f6f8fb 100%);
+    border: 1px solid rgba(27, 42, 74, 0.10);
+    box-shadow:
+        0 16px 34px rgba(20, 30, 60, 0.15),
+        0 4px 10px rgba(20, 30, 60, 0.09),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+body.dark .tarjeta {
+    background: #000000;
+    border: 3px solid #FFFF00;
+    box-shadow: none;
+}
+
+@media (max-width: 900px) {
+    .tarjetas {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+/* ---- Cajas de texto dentro de las tarjetas ---- */
+body:not(.dark) .tarjeta .campo input {
+    background: linear-gradient(180deg, #f1f3f7 0%, #ffffff 100%);
+    border: 1.5px solid #c3c9d4;
+    box-shadow: inset 0 2px 4px rgba(20, 30, 60, 0.10);
+}
+
+body:not(.dark) .tarjeta .campo input:focus {
+    border-color: var(--color-primary);
+    box-shadow:
+        inset 0 2px 4px rgba(20, 30, 60, 0.08),
+        0 0 0 4px rgba(27, 42, 74, 0.15);
+}
+
+body.dark .tarjeta .campo input {
+    background: #000000;
+    color: #FFFF00;
+    border: 2px solid #555555;
+    box-shadow: none;
+}
+
+/* ---- Etiquetas con icono ---- */
+.tarjeta .campo label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-weight: 500;
+}
+
+.tarjeta .campo label .lbl-txt {
+    font-size: 0.8em;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+}
+
+.tarjeta .campo label::before {
+    content: "";
+    flex: none;
+    width: 0.95em;
+    height: 0.95em;
+    background-color: currentColor;
+    -webkit-mask: var(--ico) center / contain no-repeat;
+    mask: var(--ico) center / contain no-repeat;
+}
+
+.campo-curso      { --ico: var(--ico-curso); }
+.campo-evaluacion { --ico: var(--ico-evaluacion); }
+.campo-clave      { --ico: var(--ico-clave); }
+.campo-profesor   { --ico: var(--ico-profesor); }
+.campo-fecha      { --ico: var(--ico-fecha); }
+.campo-horario    { --ico: var(--ico-horario); }
+.campo-aula       { --ico: var(--ico-aula); }
+
+/* Las cajas de cada columna empiezan en el mismo punto.
+   El ancho de la etiqueta se mide en em, así escala con cada tamaño de pantalla. */
+.tarjeta-izq .campo label { min-width: var(--ancho-etiqueta, 7.8em); }
+.tarjeta-der .campo label { min-width: var(--ancho-etiqueta-der, 5.1em); }
+
+/* Mismo grosor visual para el valor escrito */
+.tarjeta .campo input { font-weight: 800; }
+
+/* ---- Botones: icono de línea, fondo con relieve ---- */
+.btn-action .icon {
+    position: relative;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    flex: none;
+    overflow: hidden;
+    white-space: nowrap;
+    text-indent: 200%;
+    line-height: 0;
+}
+
+.btn-action .icon::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: currentColor;
+    -webkit-mask: var(--ico) center / contain no-repeat;
+    mask: var(--ico) center / contain no-repeat;
+    text-indent: 0;
+}
+
+#btnFullscreen .icon::before { --ico: var(--ico-full); }
+:fullscreen #btnFullscreen .icon::before,
+:-webkit-full-screen #btnFullscreen .icon::before { --ico: var(--ico-fullsalir); }
+#btnDarkMode .icon::before   { --ico: var(--ico-luna); }
+body.dark #btnDarkMode .icon::before { --ico: var(--ico-sol); }
+#btnSoloReloj .icon::before  { --ico: var(--ico-reloj); }
+#btnApuntes .icon::before    { --ico: var(--ico-apuntes); }
+#btnReset .icon::before      { --ico: var(--ico-reiniciar); }
+
+body:not(.dark) .btn-action:not(:hover) {
+    background: linear-gradient(180deg, #ffffff 0%, #f1f4f8 100%);
+    box-shadow:
+        0 6px 14px rgba(20, 30, 60, 0.14),
+        0 1px 3px rgba(20, 30, 60, 0.10),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+/* ---- Horario + Aula: las dos cajas reparten el espacio por igual ---- */
+.tarjeta-der .campo-doble {
+    grid-template-columns: auto minmax(0, 1fr) auto minmax(0, 1fr);
+    column-gap: 14px;
+    align-items: center;
+}
+
+.tarjeta-der .campo-doble .campo {
+    display: contents;
+}
+
+.tarjeta-der .campo-doble .campo-aula label {
+    min-width: 0;
+}
+
+@media (max-width: 520px) {
+    .tarjeta-der .campo-doble {
+        grid-template-columns: auto minmax(0, 1fr);
+        row-gap: 10px;
+    }
+}
+
+/* ---- Pantallas angostas: Horario y Aula en dos líneas para que no queden diminutas ---- */
+@media (max-width: 1100px) {
+    .tarjeta-der .campo-doble {
+        grid-template-columns: auto minmax(0, 1fr);
+        row-gap: 10px;
+    }
+}
+
+/* ---- Pantallas bajas (zoom alto o proyector pequeño): tarjetas más compactas ---- */
+@media (max-height: 640px) {
+    header {
+        margin-top: 6px;
+    }
+
+    .tarjeta {
+        padding: 8px 16px;
+        gap: 6px;
+    }
+
+    .tarjetas {
+        gap: 18px;
+    }
+}
+
+/* ---- Pantalla angosta Y baja (p. ej. laptop de 1366x768 con zoom 150%):
+   no hay alto para una fila extra, así que en Horario y Aula se deja solo el icono
+   (el texto sigue disponible para lectores de pantalla). ---- */
+@media (max-width: 1100px) and (max-height: 640px) {
+    .tarjeta-der .campo-doble {
+        grid-template-columns: auto minmax(0, 1fr) auto minmax(0, 1fr);
+        row-gap: 0;
+    }
+
+    .tarjeta-der .campo-doble .lbl-txt {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+    }
+
+    .tarjeta-der .campo-doble .campo-horario label {
+        min-width: 0;
+    }
+}
