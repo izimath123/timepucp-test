@@ -1600,7 +1600,7 @@ body.solo-reloj .enlace-guia {
 :root {
     --ico-curso: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M22 10 12 5 2 10l10 5 10-5Z%22/%3E%3Cpath d=%22M6 12v5c3 3 9 3 12 0v-5%22/%3E%3Cpath d=%22M22 10v6%22/%3E%3C/svg%3E");
     --ico-evaluacion: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M8 6h13M8 12h13M8 18h13%22/%3E%3Cpath d=%22M3 6h.01M3 12h.01M3 18h.01%22/%3E%3C/svg%3E");
-    --ico-clave: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Ccircle cx=%227.5%22 cy=%2215.5%22 r=%224.5%22/%3E%3Cpath d=%22m10.7 12.3 9.8-9.8%22/%3E%3Cpath d=%22m16 7 3 3%22/%3E%3Cpath d=%22m18.5 4.5 2 2%22/%3E%3C/svg%3E");
+    --ico-clave: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22%3E%3Cdefs%3E%3Cmask id=%22k%22%3E%3Crect width=%2224%22 height=%2224%22 fill=%22white%22/%3E%3Ccircle cx=%2215.6%22 cy=%228.4%22 r=%222.3%22 fill=%22black%22/%3E%3Cpath d=%22M10.6 13.4 7.4 16.6%22 stroke=%22black%22 stroke-width=%221.3%22 stroke-linecap=%22round%22/%3E%3C/mask%3E%3C/defs%3E%3Cg mask=%22url(%23k)%22%3E%3Ccircle cx=%2215.2%22 cy=%228.8%22 r=%226.8%22/%3E%3Cpath d=%22M12 12 5.2 18.8%22 stroke=%22black%22 stroke-width=%225.2%22 stroke-linecap=%22round%22/%3E%3C/g%3E%3C/svg%3E");
     --ico-profesor: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2%22/%3E%3Ccircle cx=%2212%22 cy=%227%22 r=%224%22/%3E%3C/svg%3E");
     --ico-fecha: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Crect x=%223%22 y=%224%22 width=%2218%22 height=%2218%22 rx=%222%22/%3E%3Cpath d=%22M16 2v4M8 2v4M3 10h18%22/%3E%3C/svg%3E");
     --ico-horario: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22m12 2 10 5-10 5L2 7l10-5Z%22/%3E%3Cpath d=%22m2 17 10 5 10-5%22/%3E%3Cpath d=%22m2 12 10 5 10-5%22/%3E%3C/svg%3E");
@@ -1749,9 +1749,10 @@ body.dark .tarjeta .campo input {
 .campo-horario    { --ico: var(--ico-horario); }
 .campo-aula       { --ico: var(--ico-aula); }
 
-/* Las cajas de cada columna empiezan en el mismo punto.
-   El ancho de la etiqueta se mide en em, así escala con cada tamaño de pantalla. */
-.tarjeta-izq .campo label { min-width: var(--ancho-etiqueta, 7.8em); }
+/* Tarjeta izquierda: cada caja empieza justo donde termina su etiqueta.
+   Tarjeta derecha: las cajas se alinean en el mismo punto (ancho de etiqueta en em,
+   así escala con cada tamaño de pantalla). */
+.tarjeta-izq .campo label { min-width: 0; }
 .tarjeta-der .campo label { min-width: var(--ancho-etiqueta-der, 5.1em); }
 
 /* Mismo grosor visual para el valor escrito */
