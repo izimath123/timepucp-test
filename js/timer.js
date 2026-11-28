@@ -15,6 +15,7 @@ const cursoInput = document.getElementById("curso");
 const evaluacionInput = document.getElementById("evaluacion");
 const profesorInput = document.getElementById("profesor");
 const aulaInput = document.getElementById("aula");
+const aulaSalonInput = document.getElementById("aulaSalon");
 const claveCursoInput = document.getElementById("claveCurso");
 const fechaInput = document.getElementById("fecha");
 const fechaTexto = document.getElementById("fechaTexto");
@@ -36,6 +37,21 @@ let tiempoTotal = 0;
 let ultimoTiempoRestante = 0;
 let alertaSonora = null;
 let toastTimeout = null;
+let ultimaConfigTrack = null;
+let ultimoLatidoTrack = 0;
+
+// =========================
+// ANALÍTICA (GA4)
+// Nunca debe afectar al temporizador: si falla o está bloqueada, no hace nada.
+// No enviar datos personales (curso, profesor, aula, clave).
+// =========================
+function track(nombre, params) {
+    try {
+        if (typeof window.gtag === "function") {
+            window.gtag("event", nombre, params || {});
+        }
+    } catch (e) { /* la analítica jamás debe romper la app */ }
+}
 
 // =========================
 // INICIALIZACIÓN
@@ -97,7 +113,10 @@ function iniciarCuentaRegresiva() {
         fin.setDate(fin.getDate() + 1);
     }
 
+    ultimoLatidoTrack = Date.now();
     tiempoTotal = fin - inicio;
+    // Evita contar como "completado" un rango que ya estaba vencido al configurarlo
+    const finFuturoAlConfigurar = (fin - ahora) > 0;
 
     intervaloCuenta = setInterval(() => {
         const ahora = new Date();
@@ -141,6 +160,9 @@ function iniciarCuentaRegresiva() {
             clearInterval(intervaloCuenta);
             modalFin.classList.add("visible");
             reproducirAlerta();
+            if (finFuturoAlConfigurar) {
+                track("timer_complete", { duracion_min: Math.round(tiempoTotal / 60000) });
+            }
             return;
         }
 
@@ -184,10 +206,28 @@ function iniciarCuentaRegresiva() {
         actualizarColorBarra(progreso);
 
         ultimoTiempoRestante = restante;
+
+        // Analítica: "latido" cada 60 s mientras corre el tiempo, para que GA4
+        // siga contando el salón como usuario activo aunque nadie interactúe.
+        if (Date.now() - ultimoLatidoTrack >= 60000) {
+            ultimoLatidoTrack = Date.now();
+            track("timer_heartbeat");
+        }
     }, 1000);
 
     // Guardar configuración
     guardarDatos();
+
+    // Analítica: una vez por cada combinación distinta de inicio/fin
+    const claveConfig = horaInicioInput.value + "-" + horaFinInput.value;
+    if (claveConfig !== ultimaConfigTrack) {
+        ultimaConfigTrack = claveConfig;
+        track("timer_start", {
+            duracion_min: Math.round(tiempoTotal / 60000),
+            ancho_ventana: window.innerWidth,
+            dpr: Math.round(window.devicePixelRatio * 100) / 100
+        });
+    }
 }
 
 // =========================
@@ -277,6 +317,8 @@ btnDarkMode.addEventListener("click", () => {
     btnDarkMode.innerHTML = isDark
         ? '<span class="icon">☀️</span><span class="text">Modo claro</span>'
         : '<span class="icon">🌙</span><span class="text">Modo oscuro</span>';
+
+    track("dark_mode_toggle", { modo: isDark ? "oscuro" : "claro" });
 });
 
 // =========================
@@ -370,6 +412,7 @@ btnReset.addEventListener("click", () => {
         evaluacionInput.value = "";
         profesorInput.value = "";
         aulaInput.value = "";
+        aulaSalonInput.value = "";
         claveCursoInput.value = "";
         fechaInput.value = "";
         fechaTexto.value = "";
@@ -389,6 +432,8 @@ btnReset.addEventListener("click", () => {
         localStorage.removeItem("timepucp_data");
 
         mostrarToast("Datos reiniciados correctamente", "success");
+        ultimaConfigTrack = null;
+        track("timer_reset");
     });
 });
 
@@ -403,6 +448,7 @@ function guardarDatos() {
         evaluacion: evaluacionInput.value,
         profesor: profesorInput.value,
         aula: aulaInput.value,
+        aulaSalon: aulaSalonInput.value,
         claveCurso: claveCursoInput.value,
         fecha: fechaInput.value,
         fechaTexto: fechaTexto.value
@@ -418,7 +464,7 @@ function cargarDatosGuardados() {
 }
 
 // Guardar datos automáticamente al cambiar
-[cursoInput, evaluacionInput, profesorInput, aulaInput, claveCursoInput].forEach(input => {
+[cursoInput, evaluacionInput, profesorInput, aulaInput, aulaSalonInput, claveCursoInput].forEach(input => {
     input.addEventListener("change", guardarDatos);
     input.addEventListener("blur", guardarDatos);
 });
@@ -438,10 +484,12 @@ horaFinInput.addEventListener("click", () => {
 horaInicioInput.addEventListener("change", () => {
     horaInicioInput.setAttribute("value", horaInicioInput.value);
     iniciarCuentaRegresiva();
+    track("time_picker_used", { campo: "inicio" });
 });
 horaFinInput.addEventListener("change", () => {
     horaFinInput.setAttribute("value", horaFinInput.value);
     iniciarCuentaRegresiva();
+    track("time_picker_used", { campo: "fin" });
 });
 
 // =========================
@@ -619,6 +667,7 @@ console.log("  Ctrl/Cmd + D: Modo oscuro");
             }
             panel.classList.add("visible");
             textarea.focus();
+            track("notes_open");
         }
     });
 
@@ -632,6 +681,7 @@ console.log("  Ctrl/Cmd + D: Modo oscuro");
         if (fontSize < FONT_MAX) {
             fontSize += FONT_STEP;
             textarea.style.fontSize = fontSize + "px";
+            track("notes_font_change", { direccion: "aumentar", tam_px: fontSize });
         }
     });
 
@@ -640,6 +690,7 @@ console.log("  Ctrl/Cmd + D: Modo oscuro");
         if (fontSize > FONT_MIN) {
             fontSize -= FONT_STEP;
             textarea.style.fontSize = fontSize + "px";
+            track("notes_font_change", { direccion: "reducir", tam_px: fontSize });
         }
     });
 

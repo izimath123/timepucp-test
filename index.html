@@ -8,8 +8,8 @@
     <!-- =====================
          SEO BÁSICO
     ===================== -->
-    <title>TIMEPUCP - Temporizador de Exámenes</title>
-    <meta name="description" content="Temporizador para exámenes y evaluaciones universitarias. Reloj en tiempo real, cuenta regresiva, barra de progreso, modo oscuro y pantalla completa. Ideal para aulas PUCP.">
+    <title>TIMEPUCP – Temporizador de exámenes online gratis</title>
+    <meta name="description" content="Temporizador online gratis para exámenes y evaluaciones. Cuenta regresiva, reloj en tiempo real, barra de progreso, modo oscuro y pantalla completa.">
     <meta name="keywords" content="temporizador exámenes, cronómetro evaluaciones, timer universitario, temporizador PUCP, control de tiempo examen, reloj examen online, cuenta regresiva evaluación">
     <meta name="author" content="TIMEPUCP">
     <meta name="robots" content="index, follow">
@@ -21,8 +21,8 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://timepucp.site/">
     <meta property="og:title" content="TIMEPUCP - Temporizador de Exámenes">
-    <meta property="og:description" content="Temporizador gratuito para exámenes y evaluaciones universitarias. Reloj en tiempo real, cuenta regresiva, barra de progreso, modo oscuro y pantalla completa.">
-    <meta property="og:image" content="https://timepucp.site/og-image.png">
+    <meta property="og:description" content="Temporizador gratis para exámenes y evaluaciones. Cuenta regresiva, reloj y pantalla completa.">
+    <meta property="og:image" content="https://timepucp.site/og-image.png?v=2">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="TIMEPUCP, temporizador para exámenes y evaluaciones">
@@ -35,8 +35,8 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://timepucp.site/">
     <meta name="twitter:title" content="TIMEPUCP - Temporizador de Exámenes">
-    <meta name="twitter:description" content="Temporizador gratuito para exámenes y evaluaciones universitarias. Reloj en tiempo real, cuenta regresiva y barra de progreso.">
-    <meta name="twitter:image" content="https://timepucp.site/og-image.png">
+    <meta name="twitter:description" content="Temporizador gratis para exámenes y evaluaciones. Cuenta regresiva, reloj y pantalla completa.">
+    <meta name="twitter:image" content="https://timepucp.site/og-image.png?v=2">
 
     <!-- =====================
          STRUCTURED DATA (JSON-LD)
@@ -130,29 +130,36 @@
         </div>
 
         <div class="info">
-            <!-- Fila 1 -->
+            <!-- Fila 1: Curso + Profesor -->
             <div class="fila fila-1">
                 <div class="campo">
                     <label for="curso">Curso:</label>
                     <input type="text" placeholder="Curso" id="curso">
                 </div>
 
-                <div class="campo campo-evaluacion">
-                    <label for="evaluacion">Evaluación:</label>
-                    <input type="text" placeholder="Evaluación" id="evaluacion">
-                </div>
-            </div>
-
-            <!-- Fila 2 -->
-            <div class="fila fila-2">
                 <div class="campo">
                     <label for="profesor">Profesor:</label>
                     <input type="text" placeholder="C. Q." id="profesor">
                 </div>
+            </div>
 
-                <div class="campo campo-horario">
-                    <label for="aula">Horario de práctica:</label>
-                    <input type="text" placeholder="0123" id="aula">
+            <!-- Fila 2: Evaluación + Horario y Aula -->
+            <div class="fila fila-2">
+                <div class="campo campo-evaluacion">
+                    <label for="evaluacion">Evaluación:</label>
+                    <input type="text" placeholder="Evaluación" id="evaluacion">
+                </div>
+
+                <div class="campo-doble">
+                    <div class="campo campo-horario">
+                        <label for="aula">Horario:</label>
+                        <input type="text" placeholder="0123" id="aula">
+                    </div>
+
+                    <div class="campo campo-aula">
+                        <label for="aulaSalon">Aula:</label>
+                        <input type="text" placeholder="Z123" id="aulaSalon">
+                    </div>
                 </div>
             </div>
 

@@ -1566,3 +1566,19 @@ body.solo-reloj .enlace-guia {
 @media print {
     .enlace-guia { display: none; }
 }
+
+/* =========================
+   HORARIO + AULA EN LA MISMA FILA (mitad derecha de la fila 2)
+========================= */
+.campo-doble {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 14px;
+    min-width: 0;
+}
+
+@media (max-width: 520px) {
+    .campo-doble {
+        grid-template-columns: 1fr;
+    }
+}
