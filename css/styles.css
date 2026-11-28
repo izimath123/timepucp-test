@@ -1582,3 +1582,11 @@ body.solo-reloj .enlace-guia {
         grid-template-columns: 1fr;
     }
 }
+
+/* Columna derecha: las cajas de Profesor, Horario y Fecha empiezan en el mismo punto.
+   El ancho de la etiqueta se mide en em, así escala con el tamaño de letra de cada pantalla. */
+.campo-profesor label,
+.campo-horario label,
+.campo-fecha label {
+    min-width: 4.8em;
+}
