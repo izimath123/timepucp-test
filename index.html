@@ -184,10 +184,20 @@
                         <span class="icon">⛶</span>
                         <span class="text">Pantalla completa</span>
                     </button>
-                    <button id="btnDarkMode" class="btn-action" aria-label="Cambiar a modo oscuro">
-                        <span class="icon">🌙</span>
-                        <span class="text">Modo oscuro</span>
-                    </button>
+                    <div id="selectorModo" class="selector-modo" role="radiogroup" aria-label="Modo de color">
+                        <button type="button" class="seg activo" data-modo="claro" role="radio" aria-checked="true">
+                            <span class="icon"></span>
+                            <span class="text">Claro</span>
+                        </button>
+                        <button type="button" class="seg" data-modo="oscuro" role="radio" aria-checked="false">
+                            <span class="icon"></span>
+                            <span class="text">Oscuro</span>
+                        </button>
+                        <button type="button" class="seg" data-modo="contraste" role="radio" aria-checked="false" aria-label="Modo contraste">
+                            <span class="icon"></span>
+                            <span class="text">Contraste</span>
+                        </button>
+                    </div>
                     <button id="btnSoloReloj" class="btn-action" aria-label="Modo solo reloj">
                         <span class="icon">🕐</span>
                         <span class="text">Solo reloj</span>

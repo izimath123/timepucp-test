@@ -1784,8 +1784,6 @@ body.dark .tarjeta .campo input {
 #btnFullscreen .icon::before { --ico: var(--ico-full); }
 :fullscreen #btnFullscreen .icon::before,
 :-webkit-full-screen #btnFullscreen .icon::before { --ico: var(--ico-fullsalir); }
-#btnDarkMode .icon::before   { --ico: var(--ico-luna); }
-body.dark #btnDarkMode .icon::before { --ico: var(--ico-sol); }
 #btnSoloReloj .icon::before  { --ico: var(--ico-reloj); }
 #btnApuntes .icon::before    { --ico: var(--ico-apuntes); }
 #btnReset .icon::before      { --ico: var(--ico-reiniciar); }
@@ -1865,4 +1863,326 @@ body:not(.dark) .btn-action:not(:hover) {
     .tarjeta-der .campo-doble .campo-horario label {
         min-width: 0;
     }
+}
+
+
+/* =====================================================================
+   SELECTOR DE MODO DE COLOR: Claro / Oscuro / Contraste
+   Reemplaza al botón único de modo oscuro. Mismo alto y tamaño de letra
+   que los demás botones de la barra inferior.
+   Clases del <body>:  (ninguna) = claro · dark noche = oscuro · dark = contraste
+===================================================================== */
+:root {
+    --ico-contraste: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Ccircle cx=%2212%22 cy=%2212%22 r=%229%22/%3E%3Cpath d=%22M12 3a9 9 0 0 1 0 18Z%22 fill=%22black%22/%3E%3C/svg%3E");
+}
+
+.selector-modo {
+    display: flex;
+    align-items: stretch;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 14px;
+    border: 2px solid var(--color-primary);
+}
+
+.selector-modo .seg {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: none;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 6px 16px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--color-primary);
+    cursor: pointer;
+    transition: background var(--transition-speed), color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.selector-modo .seg .icon {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    flex: none;
+}
+
+.selector-modo .seg .icon::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: currentColor;
+    -webkit-mask: var(--ico) center / contain no-repeat;
+    mask: var(--ico) center / contain no-repeat;
+}
+
+.seg[data-modo="claro"] .icon::before     { --ico: var(--ico-sol); }
+.seg[data-modo="oscuro"] .icon::before    { --ico: var(--ico-luna); }
+.seg[data-modo="contraste"] .icon::before { --ico: var(--ico-contraste); }
+
+/* Claro */
+body:not(.dark) .selector-modo {
+    background: linear-gradient(180deg, #ffffff 0%, #f1f4f8 100%);
+    box-shadow:
+        0 6px 14px rgba(20, 30, 60, 0.14),
+        0 1px 3px rgba(20, 30, 60, 0.10),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+body:not(.dark) .selector-modo .seg:not(.activo):hover {
+    background: rgba(27, 42, 74, 0.08);
+}
+
+body:not(.dark) .selector-modo .seg.activo {
+    background: var(--color-primary);
+    color: #ffffff;
+    box-shadow: 0 3px 8px rgba(20, 30, 60, 0.30);
+}
+
+/* Contraste (negro puro + amarillo intenso) */
+body.dark .selector-modo {
+    background: #000000;
+    border: 2px solid #FFFF00;
+}
+
+body.dark .selector-modo .seg {
+    color: #FFFF00;
+    font-weight: 900;
+}
+
+body.dark .selector-modo .seg:not(.activo):hover {
+    background: rgba(255, 255, 0, 0.2);
+}
+
+body.dark .selector-modo .seg.activo {
+    background: #FFFF00;
+    color: #000000;
+}
+
+@media (min-width: 1600px) {
+    .selector-modo .seg { font-size: 20px; padding: 10px 20px; }
+}
+
+@media (min-width: 2400px) {
+    .selector-modo .seg { font-size: 24px; padding: 14px 28px; }
+}
+
+@media (max-width: 768px) {
+    .selector-modo { flex: 1 1 100%; }
+    .selector-modo .seg { flex: 1; justify-content: center; padding: 8px 10px; font-size: 16px; }
+}
+
+/* =====================================================================
+   MODO OSCURO (nuevo): azul noche + amarillo suave
+   body.dark.noche se apoya en las reglas de body.dark y solo cambia colores.
+   Paleta: fondo #0B121C · superficie #182330 · caja #101923
+           acento #FDE047 · texto #E2E8F0 · borde #526478
+===================================================================== */
+body.dark.noche {
+    background: #0B121C;
+    color: #E2E8F0;
+}
+
+body.dark.noche header {
+    background: #182330;
+    border: 1px solid #526478;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+body.dark.noche .tarjeta {
+    background: #101923;
+    border: 1px solid #526478;
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+body.dark.noche input,
+body.dark.noche input[type="time"],
+body.dark.noche .tarjeta .campo input {
+    background: #101923;
+    color: #E2E8F0;
+    border: 2px solid #526478;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+body.dark.noche header input,
+body.dark.noche header input[type="time"] {
+    font-weight: 700;
+}
+
+body.dark.noche .tarjeta .campo input {
+    font-weight: 700;
+}
+
+body.dark.noche input:focus,
+body.dark.noche .tarjeta .campo input:focus {
+    border-color: #FDE047;
+    box-shadow: 0 0 0 3px rgba(253, 224, 71, 0.25);
+}
+
+body.dark.noche input::placeholder {
+    color: rgba(226, 232, 240, 0.35);
+}
+
+body.dark.noche .hora-input label,
+body.dark.noche .label-restante,
+body.dark.noche .campo label {
+    color: #E2E8F0;
+    font-weight: 500;
+}
+
+body.dark.noche .campo label::before {
+    background-color: #FDE047;
+}
+
+body.dark.noche #horaActual {
+    color: #FDE047;
+    text-shadow: none;
+}
+
+body.dark.noche #contador,
+body.dark.noche #contadorSolo {
+    background: #FDE047;
+    color: #0B121C;
+    border: 0;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    font-weight: 800;
+}
+
+body.dark.noche .barra-container {
+    background: #182330;
+    border: 2px solid #526478;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.45);
+}
+
+body.dark.noche .barra-progreso.fase-verde,
+body.dark.noche .barra-progreso.fase-amarillo {
+    background: #FDE047;
+}
+
+body.dark.noche .barra-progreso.fase-naranja {
+    background: #FB923C;
+}
+
+body.dark.noche .barra-progreso.fase-rojo {
+    background: #F87171;
+}
+
+body.dark.noche .barra-porcentaje {
+    color: #E2E8F0;
+    font-weight: 700;
+}
+
+body.dark.noche .btn-action,
+body.dark.noche .btn-secondary {
+    background: #182330;
+    color: #E2E8F0;
+    border: 1.5px solid #526478;
+    font-weight: 600;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+}
+
+body.dark.noche .btn-action .icon {
+    color: #FDE047;
+}
+
+body.dark.noche .btn-action:hover,
+body.dark.noche .btn-secondary:hover {
+    background: #1F2D3D;
+    color: #E2E8F0;
+    border-color: #FDE047;
+}
+
+/* Selector de modo en Oscuro */
+body.dark.noche .selector-modo {
+    background: #182330;
+    border: 1.5px solid #526478;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+}
+
+body.dark.noche .selector-modo .seg {
+    color: rgba(226, 232, 240, 0.7);
+    font-weight: 600;
+}
+
+body.dark.noche .selector-modo .seg:not(.activo):hover {
+    background: rgba(226, 232, 240, 0.08);
+    color: #E2E8F0;
+}
+
+body.dark.noche .selector-modo .seg.activo {
+    background: rgba(253, 224, 71, 0.14);
+    color: #FDE047;
+    box-shadow: inset 0 0 0 1px rgba(253, 224, 71, 0.55);
+}
+
+/* Ventanas y paneles en Oscuro */
+body.dark.noche .modal-fin-contenido {
+    background: #182330;
+    border: 1px solid #526478;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+}
+
+body.dark.noche .modal-fin-titulo {
+    color: #FDE047;
+}
+
+body.dark.noche .modal-fin-mensaje {
+    color: #E2E8F0;
+}
+
+body.dark.noche .modal-fin-btn,
+body.dark.noche .confirm-accept {
+    background: #FDE047;
+    color: #0B121C;
+    font-weight: 800;
+}
+
+body.dark.noche .confirm-box {
+    background: #182330;
+    border: 1px solid #526478;
+}
+
+body.dark.noche .confirm-msg {
+    color: #E2E8F0;
+}
+
+body.dark.noche .confirm-cancel {
+    background: transparent;
+    color: #E2E8F0;
+    border: 1.5px solid #526478;
+}
+
+body.dark.noche .panel-apuntes {
+    background: #101923;
+    border: 1px solid #526478;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6);
+}
+
+body.dark.noche .panel-apuntes-header {
+    background: #182330;
+    color: #FDE047;
+}
+
+body.dark.noche .panel-apuntes-btn-size,
+body.dark.noche .panel-apuntes-cerrar {
+    background: rgba(226, 232, 240, 0.08);
+    color: #E2E8F0;
+}
+
+body.dark.noche .panel-apuntes-btn-size:hover,
+body.dark.noche .panel-apuntes-cerrar:hover {
+    background: rgba(226, 232, 240, 0.18);
+}
+
+body.dark.noche .panel-apuntes-texto {
+    background: #101923;
+    color: #E2E8F0;
+    font-weight: 500;
+}
+
+body.dark.noche .panel-apuntes-texto::placeholder {
+    color: rgba(226, 232, 240, 0.35);
 }

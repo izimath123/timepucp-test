@@ -22,7 +22,7 @@ const fechaTexto = document.getElementById("fechaTexto");
 
 // Botones
 const btnFullscreen = document.getElementById("btnFullscreen");
-const btnDarkMode = document.getElementById("btnDarkMode");
+const selectorModo = document.getElementById("selectorModo");
 const btnReset = document.getElementById("btnReset");
 const btnSoloReloj = document.getElementById("btnSoloReloj");
 const btnSalirSoloReloj = document.getElementById("btnSalirSoloReloj");
@@ -295,30 +295,42 @@ document.addEventListener("fullscreenchange", () => {
 });
 
 // =========================
-// MODO OSCURO
+// MODO DE COLOR: claro / oscuro / contraste
+//   claro      -> sin clases en <body>
+//   oscuro     -> body.dark.noche   (paleta azul noche + amarillo suave)
+//   contraste  -> body.dark         (negro puro + amarillo intenso)
 // =========================
-function aplicarModoOscuro() {
-    const modoOscuro = localStorage.getItem("darkMode") === "true";
+const MODOS_COLOR = ["claro", "oscuro", "contraste"];
 
-    if (modoOscuro) {
-        document.body.classList.add("dark");
-        btnDarkMode.innerHTML = '<span class="icon">☀️</span><span class="text">Modo claro</span>';
-    } else {
-        document.body.classList.remove("dark");
-        btnDarkMode.innerHTML = '<span class="icon">🌙</span><span class="text">Modo oscuro</span>';
-    }
+function modoColorActual() {
+    if (!document.body.classList.contains("dark")) return "claro";
+    return document.body.classList.contains("noche") ? "oscuro" : "contraste";
 }
 
-btnDarkMode.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-    const isDark = document.body.classList.contains("dark");
-    localStorage.setItem("darkMode", isDark);
+function establecerModoColor(modo) {
+    if (!MODOS_COLOR.includes(modo)) modo = "claro";
 
-    btnDarkMode.innerHTML = isDark
-        ? '<span class="icon">☀️</span><span class="text">Modo claro</span>'
-        : '<span class="icon">🌙</span><span class="text">Modo oscuro</span>';
+    document.body.classList.toggle("dark", modo !== "claro");
+    document.body.classList.toggle("noche", modo === "oscuro");
 
-    track("dark_mode_toggle", { modo: isDark ? "oscuro" : "claro" });
+    selectorModo.querySelectorAll(".seg").forEach(btn => {
+        const activo = btn.dataset.modo === modo;
+        btn.classList.toggle("activo", activo);
+        btn.setAttribute("aria-checked", activo ? "true" : "false");
+    });
+
+    localStorage.setItem("modoColor", modo);
+}
+
+function aplicarModoOscuro() {
+    establecerModoColor(localStorage.getItem("modoColor") || "claro");
+}
+
+selectorModo.addEventListener("click", (e) => {
+    const btn = e.target.closest(".seg");
+    if (!btn) return;
+    establecerModoColor(btn.dataset.modo);
+    track("dark_mode_toggle", { modo: btn.dataset.modo });
 });
 
 // =========================
@@ -461,6 +473,7 @@ function cargarDatosGuardados() {
     // Cada vez que se abre la página, se borra todo y se empieza desde cero.
     localStorage.removeItem("timepucp_data");
     localStorage.removeItem("darkMode");
+    localStorage.removeItem("modoColor");
 }
 
 // Guardar datos automáticamente al cambiar
@@ -502,10 +515,12 @@ document.addEventListener("keydown", (e) => {
         btnFullscreen.click();
     }
 
-    // Ctrl/Cmd + D para modo oscuro
+    // Ctrl/Cmd + D para cambiar de modo de color (claro -> oscuro -> contraste)
     if ((e.ctrlKey || e.metaKey) && e.key === "d") {
         e.preventDefault();
-        btnDarkMode.click();
+        const siguiente = MODOS_COLOR[(MODOS_COLOR.indexOf(modoColorActual()) + 1) % MODOS_COLOR.length];
+        establecerModoColor(siguiente);
+        track("dark_mode_toggle", { modo: siguiente });
     }
 
     // Escape para salir del modo solo reloj o cerrar modal
